@@ -25,4 +25,14 @@ public class ApplicationDbContext : DbContext
         }
         return await base.SaveChangesAsync(cancellationToken);
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Metric>()
+        .HasOne(m => m.NuclearPlant)
+        .WithMany(n => n.Metric)
+        .OnDelete(DeleteBehavior.Cascade);
+
+        base.OnModelCreating(modelBuilder);
+    }
 }
