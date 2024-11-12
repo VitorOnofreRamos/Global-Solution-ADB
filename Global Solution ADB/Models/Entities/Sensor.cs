@@ -1,4 +1,5 @@
 ﻿using Global_Solution_ADB.Models.Entities.Enums;
+using Global_Solution_ADB.Models.Entities.ValueObjects;
 using System.ComponentModel.DataAnnotations;
 
 namespace Global_Solution_ADB.Models.Entities;

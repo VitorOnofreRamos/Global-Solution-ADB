@@ -2,6 +2,14 @@
 
 public enum EnumAnalysisUnit
 {
-    Cº,
-    msv,
+    Celsius,                // °C
+    Fahrenheit,             // °F
+    Milisievert,            // mSv
+    Microsievert,           // μSv
+    Bar,                    // bar
+    Psi,                    // psi
+    LitrosPorSegundo,       // L/s
+    MetrosCubicosPorHora,   // m³/h
+    MilimetrosPorSegundo,   // mm/s
+    AceleracaoGravitacional // g
 }
