@@ -1,12 +1,12 @@
 ﻿using Global_Solution_ADB.Models.Entities.Enums;
-using Global_Solution_ADB.Models.Entities.ValueObjects;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Solution_ADB.Models.Entities;
 
+[Table("GlobalEnergy_Sensor")]
 public class Sensor : _BaseEntity
 {
-    //[System.Diagnostics.DebuggerNonUserCode()]
     [Required]
     [StringLength(100)]
     public string Name { get; set; }

@@ -1,8 +1,10 @@
 ﻿using Global_Solution_ADB.Models.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Solution_ADB.Models.Entities;
 
+[Table("GlobalEnergy_User")]
 public class User : _BaseEntity
 {
     [Required]

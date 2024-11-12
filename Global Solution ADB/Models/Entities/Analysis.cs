@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Solution_ADB.Models.Entities;
 
+[Table("GlobalEnergy_Analysis")]
 public class Analysis : _BaseEntity
 {
     [Required]
