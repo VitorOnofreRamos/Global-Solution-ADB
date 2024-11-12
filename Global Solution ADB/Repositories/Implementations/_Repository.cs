@@ -25,7 +25,6 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
         }
         catch (Exception ex) 
         {
-            //Log exception
             throw new ApplicationException($"Error retrieving entity with ID {id}: {ex.Message}", ex);
         }
     }
