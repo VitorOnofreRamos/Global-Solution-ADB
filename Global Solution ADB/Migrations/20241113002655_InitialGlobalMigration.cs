@@ -19,7 +19,7 @@ namespace Global_Solution_ADB.Migrations
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     Name = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
                     Localization = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
-                    FullCapacity = table.Column<float>(type: "BINARY_FLOAT", nullable: false),
+                    FullCapacity = table.Column<decimal>(type: "NUMBER(5,2)", nullable: false),
                     NumberOfReactors = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true)
@@ -48,35 +48,16 @@ namespace Global_Solution_ADB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GlobalEnergy_User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Name = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Role = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    LastLoginAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GlobalEnergy_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GlobalEnergy_Metric",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    NuclearPlantId = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     NuclearPlantDate = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    ElectricityProvided = table.Column<double>(type: "BINARY_DOUBLE", nullable: false),
-                    NuclearParticipation = table.Column<double>(type: "BINARY_DOUBLE", nullable: false),
-                    OperationalEfficiency = table.Column<double>(type: "BINARY_DOUBLE", nullable: false),
+                    ElectricityProvided = table.Column<decimal>(type: "NUMBER(10,2)", nullable: false),
+                    NuclearParticipation = table.Column<decimal>(type: "NUMBER(5,2)", nullable: false),
+                    OperationalEfficiency = table.Column<decimal>(type: "NUMBER(5,2)", nullable: false),
+                    NuclearPlantId = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true)
                 },
@@ -168,9 +149,6 @@ namespace Global_Solution_ADB.Migrations
 
             migrationBuilder.DropTable(
                 name: "GlobalEnergy_Metric");
-
-            migrationBuilder.DropTable(
-                name: "GlobalEnergy_User");
 
             migrationBuilder.DropTable(
                 name: "GlobalEnergy_Sensor");

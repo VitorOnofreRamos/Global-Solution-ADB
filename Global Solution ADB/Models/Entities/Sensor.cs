@@ -18,8 +18,11 @@ public class Sensor : _BaseEntity
     [StringLength(100)]
     public string Location { get; set; } // Localização do sensor dentro da usina (ex.: Reator, Sistema de Resfriamento)
     
-    //[Required]
-    //[Column(TypeName = "NUMBER(1)")]
-    //public bool Status { get; set; } // Status operacional do sensor (0 = inativo, 1 = ativo)
+    [Required]
+    [Column(TypeName = "NUMBER(1)")]
+    public bool Status { get; set; } // Status operacional do sensor (0 = inativo, 1 = ativo)
 
+    //Propriedades de navegação para as análises e alertas associadas ao sensor
+    public ICollection<Analysis> Analyses { get; set; } = new List<Analysis>();
+    public ICollection<Alert> Alerts { get; set; } = new List<Alert>();
 }

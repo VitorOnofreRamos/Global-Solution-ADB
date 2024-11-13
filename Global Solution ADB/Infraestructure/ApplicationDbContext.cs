@@ -10,7 +10,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Sensor> Sensors { get; set; }
     public DbSet<Analysis> Analyzes { get; set; }
     public DbSet<Alert> Alerts { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<NuclearPlant> NuclearPlants { get; set; }
     public DbSet<Metric> Metrics { get; set; }
 
@@ -28,10 +27,19 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Configuração de relação entre NuclearPlant e Metric (1:N)
         modelBuilder.Entity<Metric>()
-        .HasOne(m => m.NuclearPlant)
-        .WithMany(n => n.Metric)
-        .OnDelete(DeleteBehavior.Cascade);
+            .HasOne(m => m.NuclearPlant)
+            .WithMany(np => np.Metrics)
+            .HasForeignKey(m => m.NuclearPlantId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Configuração de relação entre Sensor e Alert (1:N)
+        modelBuilder.Entity<Alert>()
+            .HasOne(a => a.Sensor)
+            .WithMany(s => s.Alerts)
+            .HasForeignKey(a => a.SensorId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         base.OnModelCreating(modelBuilder);
     }

@@ -107,11 +107,11 @@ namespace Global_Solution_ADB.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<double>("ElectricityProvided")
-                        .HasColumnType("BINARY_DOUBLE");
+                    b.Property<decimal>("ElectricityProvided")
+                        .HasColumnType("NUMBER(10, 2)");
 
-                    b.Property<double>("NuclearParticipation")
-                        .HasColumnType("BINARY_DOUBLE");
+                    b.Property<decimal>("NuclearParticipation")
+                        .HasColumnType("NUMBER(5, 2)");
 
                     b.Property<DateTime>("NuclearPlantDate")
                         .HasColumnType("TIMESTAMP(7)");
@@ -119,8 +119,8 @@ namespace Global_Solution_ADB.Migrations
                     b.Property<int>("NuclearPlantId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<double>("OperationalEfficiency")
-                        .HasColumnType("BINARY_DOUBLE");
+                    b.Property<decimal>("OperationalEfficiency")
+                        .HasColumnType("NUMBER(5, 2)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("TIMESTAMP(7)");
@@ -143,8 +143,8 @@ namespace Global_Solution_ADB.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<float>("FullCapacity")
-                        .HasColumnType("BINARY_FLOAT");
+                    b.Property<decimal>("FullCapacity")
+                        .HasColumnType("NUMBER(5, 2)");
 
                     b.Property<string>("Localization")
                         .IsRequired()
@@ -202,48 +202,10 @@ namespace Global_Solution_ADB.Migrations
                     b.ToTable("GlobalEnergy_Sensor");
                 });
 
-            modelBuilder.Entity("Global_Solution_ADB.Models.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<DateTime>("LastLoginAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GlobalEnergy_User");
-                });
-
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Alert", b =>
                 {
                     b.HasOne("Global_Solution_ADB.Models.Entities.Sensor", "Sensor")
-                        .WithMany()
+                        .WithMany("Alerts")
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -254,7 +216,7 @@ namespace Global_Solution_ADB.Migrations
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Analysis", b =>
                 {
                     b.HasOne("Global_Solution_ADB.Models.Entities.Sensor", "Sensor")
-                        .WithMany()
+                        .WithMany("Analyses")
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -265,12 +227,24 @@ namespace Global_Solution_ADB.Migrations
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Metric", b =>
                 {
                     b.HasOne("Global_Solution_ADB.Models.Entities.NuclearPlant", "NuclearPlant")
-                        .WithMany()
+                        .WithMany("Metrics")
                         .HasForeignKey("NuclearPlantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("NuclearPlant");
+                });
+
+            modelBuilder.Entity("Global_Solution_ADB.Models.Entities.NuclearPlant", b =>
+                {
+                    b.Navigation("Metrics");
+                });
+
+            modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Sensor", b =>
+                {
+                    b.Navigation("Alerts");
+
+                    b.Navigation("Analyses");
                 });
 #pragma warning restore 612, 618
         }

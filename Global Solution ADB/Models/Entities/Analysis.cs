@@ -11,9 +11,7 @@ public class Analysis : _BaseEntity
     [Required]
     public double Value {  get; set; } // Valor medido pelo sensor(ex.: temperatura, radiação)
     
-    [Required]
-    [EnumDataType(typeof(EnumAnalysisUnit))]
-    public EnumAnalysisUnit Unit { get; set; } // Unidade de medida (ex.: °C, mSv)
+   
     
     [Required]
     public DateTime Timestamp { get; set; } // Data e hora em que a medição foi realizada
