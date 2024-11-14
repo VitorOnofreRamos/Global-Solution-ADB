@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Global_Solution_ADB.Application.DTOs.AppointmentDTO>
+﻿@model IEnumerable<Global_Solution_ADB.Application.DTOs.NuclearPlantDTO>
 @{
     ViewData["Title"] = "NuclearPlants";
 }
@@ -13,19 +13,17 @@
 					<th>ID</th>
 					<th>Name</th>
 					<th>FullCapacity</th>
-					<th>Address</th>
 					<th>NumberOfReactors</th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var appointmentItem in Model)
+				@foreach (var nuclearPlantItem in Model)
 				{
 					<tr>
-						<td>@appointmentItem.ID</td>
-						<td>@appointmentItem.Name</td>
-						<td>@appointmentItem.FullCapacity</td>
-						<td>@appointmentItem.Address</td>
-						<td>@appointmentItem.NumberOfReactors</td>
+						<td>@nuclearPlantItem.Id</td>
+						<td>@nuclearPlantItem.Name</td>
+						<td>@nuclearPlantItem.FullCapacity</td>
+						<td>@nuclearPlantItem.NumberOfReactors</td>
 					</tr>
 				}
 			</tbody>

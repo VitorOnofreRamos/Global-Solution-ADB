@@ -84,35 +84,35 @@ public class ApplicationDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         // Chamando o procedimento PL/SQL para criar as sequências para cada tabela
-        CreateSequenceForTable("NuclearPlant");
-        CreateSequenceForTable("Metric");
-        CreateSequenceForTable("Sensor");
-        CreateSequenceForTable("Analysis");
-        CreateSequenceForTable("Alert");
+        //CreateSequenceForTable("NuclearPlant");
+        //CreateSequenceForTable("Metric");
+        //CreateSequenceForTable("Sensor");
+        //CreateSequenceForTable("Analysis");
+        //CreateSequenceForTable("Alert");
 
         base.OnModelCreating(modelBuilder);
     }
 
-    private void CreateSequenceForTable(string tableName)
-    {
-        using(var connection = Database.GetDbConnection())
-        {
-            try
-            {
-                connection.Open();
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "BEGIN Create_Sequence_For_Table(:tableName); END;";
-                    command.CommandType = System.Data.CommandType.Text;
-                    command.Parameters.Add(new OracleParameter(":tablename", tableName));
+    //private void CreateSequenceForTable(string tableName)
+    //{
+    //    using(var connection = Database.GetDbConnection())
+    //    {
+    //        try
+    //        {
+    //            connection.Open();
+    //            using (var command = connection.CreateCommand())
+    //            {
+    //                command.CommandText = "BEGIN Create_Sequence_For_Table(:tableName); END;";
+    //                command.CommandType = System.Data.CommandType.Text;
+    //                command.Parameters.Add(new OracleParameter(":tablename", tableName));
 
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex) 
-            {
-                Console.WriteLine($"Error ao criar sequência para a tabela {tableName}: {ex.Message}");
-            }
-        }
-    }
+    //                command.ExecuteNonQuery();
+    //            }
+    //        }
+    //        catch (Exception ex) 
+    //        {
+    //            Console.WriteLine($"Error ao criar sequência para a tabela {tableName}: {ex.Message}");
+    //        }
+    //    }
+    //}
 }
