@@ -26,9 +26,9 @@ namespace Global_Solution_ADB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_ALERT")
+                        .HasDefaultValueSql("NEXTVAL FOR SEQ_ALERT");
 
                     b.Property<int>("AnalysisId")
                         .HasColumnType("NUMBER(10)")
@@ -64,9 +64,9 @@ namespace Global_Solution_ADB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_ANALYSIS")
+                        .HasDefaultValueSql("NEXTVAL FOR SEQ_ANALYSIS");
 
                     b.Property<int>("SensorId")
                         .HasColumnType("NUMBER(10)")
@@ -91,9 +91,9 @@ namespace Global_Solution_ADB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_METRIC")
+                        .HasDefaultValueSql("NEXTVAL FOR SEQ_METRIC");
 
                     b.Property<decimal>("ElectricityProvided")
                         .HasColumnType("NUMBER")
@@ -126,9 +126,9 @@ namespace Global_Solution_ADB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_NUCLEARPLANT")
+                        .HasDefaultValueSql("NEXTVAL FOR SEQ_NUCLEARPLANT");
 
                     b.Property<decimal>("FullCapacity")
                         .HasColumnType("NUMBER")
@@ -153,9 +153,9 @@ namespace Global_Solution_ADB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_SENSOR")
+                        .HasDefaultValueSql("NEXTVAL FOR SEQ_SENSOR");
 
                     b.Property<string>("MachinaryLocation")
                         .IsRequired()

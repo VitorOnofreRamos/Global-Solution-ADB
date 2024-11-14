@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Analysis> Analyzes { get; set; }
     public DbSet<Alert> Alerts { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Configuração de conversão de bool para CHAR(1) '1'/'0' no banco de dados Oracle
@@ -31,6 +32,28 @@ public class ApplicationDbContext : DbContext
             .HasConversion(
                 v => v ? "1" : "0",
                 v => v == "1");
+
+        // Renomeando a coluna "Id" para cada tabela para seguir o padrão "ID_{NomeDaTabela}"
+        modelBuilder.Entity<NuclearPlant>()
+            .Property(np => np.Id)
+            .HasColumnName("ID_NUCLEARPLANT")
+            .HasValueGenerator((_, __) => new SequenceValueGenerator("seq_nuclearplant"));
+
+        modelBuilder.Entity<Metric>()
+            .Property(m => m.Id)
+            .HasColumnName("ID_METRIC");
+
+        modelBuilder.Entity<Sensor>()
+            .Property(s => s.Id)
+            .HasColumnName("ID_SENSOR");
+
+        modelBuilder.Entity<Analysis>()
+            .Property(a => a.Id)
+            .HasColumnName("ID_ANALYSIS");
+
+        modelBuilder.Entity<Alert>()
+            .Property(al => al.Id)
+            .HasColumnName("ID_ALERT");
 
         // Relacionamento NuclearPlant -> Metrics (1:N)
         modelBuilder.Entity<NuclearPlant>()
