@@ -1,28 +1,31 @@
-﻿using Global_Solution_ADB.Models.Entities.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Solution_ADB.Models.Entities;
 
-[Table("GlobalEnergy_Sensor")]
+[Table("SENSOR")]
 public class Sensor : _BaseEntity
 {
+    [Column("SENSORNAME")]
     [Required]
-    [StringLength(100)]
-    public string Name { get; set; } // Nome ou identificação do sensor
-    
+    [StringLength(50)]
+    public string Name { get; set; }
+
+    [Column("MACHINARYLOCATION")]
     [Required]
-    [EnumDataType(typeof(EnumSensorType))]
-    public EnumSensorType Type { get; set; } // Tipo do sensor (ex.: Temperatura, Radiação)
-    
-    [StringLength(100)]
-    public string Location { get; set; } // Localização do sensor dentro da usina (ex.: Reator, Sistema de Resfriamento)
-    
+    [StringLength(50)]
+    public string MachinaryLocation { get; set; }
+
+    [Column("STATUS")]
     [Required]
-    [Column(TypeName = "NUMBER(1)")]
     public bool Status { get; set; } // Status operacional do sensor (0 = inativo, 1 = ativo)
 
-    //Propriedades de navegação para as análises e alertas associadas ao sensor
+    [Column("ID_NUCLEARPLANT")]
+    [Required]
+    [ForeignKey(nameof(NuclearPlant))]
+    public int NuclearPlantId { get; set; }
+    public virtual NuclearPlant NuclearPlant { get; set; }
+
+    //Navegação
     public ICollection<Analysis> Analyses { get; set; } = new List<Analysis>();
-    public ICollection<Alert> Alerts { get; set; } = new List<Alert>();
 }

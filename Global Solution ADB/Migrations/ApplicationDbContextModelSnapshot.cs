@@ -30,37 +30,34 @@ namespace Global_Solution_ADB.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<int>("AnalysisId")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_ANALYSIS");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("NVARCHAR2(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("ALERTDESCRIPTION");
 
-                    b.Property<bool>("IsResolved")
-                        .HasColumnType("NUMBER(1)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("NUMBER(10)");
+                    b.Property<string>("IsResolved")
+                        .IsRequired()
+                        .HasColumnType("CHAR(1)")
+                        .HasColumnName("ISRESOLVED");
 
                     b.Property<DateTime?>("ResolvedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.Property<int>("SensorId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("RESOLVEDAT");
 
                     b.Property<DateTime>("TriggeredAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("TRIGGEREDAT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SensorId");
+                    b.HasIndex("AnalysisId");
 
-                    b.ToTable("GlobalEnergy_Alert");
+                    b.ToTable("ALERT");
                 });
 
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Analysis", b =>
@@ -71,29 +68,23 @@ namespace Global_Solution_ADB.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
                     b.Property<int>("SensorId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_SENSOR");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("ANALYSISTIMESTAMP");
 
-                    b.Property<int>("Unit")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("BINARY_DOUBLE");
+                    b.Property<decimal>("Value")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("ANALYSISVALUE");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SensorId");
 
-                    b.ToTable("GlobalEnergy_Analysis");
+                    b.ToTable("ANALYSIS");
                 });
 
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Metric", b =>
@@ -104,32 +95,31 @@ namespace Global_Solution_ADB.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
                     b.Property<decimal>("ElectricityProvided")
-                        .HasColumnType("NUMBER(10, 2)");
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("ELECTRICITYPROVIDED");
+
+                    b.Property<DateTime>("MetricDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("METRICDATE");
 
                     b.Property<decimal>("NuclearParticipation")
-                        .HasColumnType("NUMBER(5, 2)");
-
-                    b.Property<DateTime>("NuclearPlantDate")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("NUCLEARPARTICIPATION");
 
                     b.Property<int>("NuclearPlantId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_NUCLEARPLANT");
 
                     b.Property<decimal>("OperationalEfficiency")
-                        .HasColumnType("NUMBER(5, 2)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("OPERATIONALEFFICIENCY");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NuclearPlantId");
 
-                    b.ToTable("GlobalEnergy_Metric");
+                    b.ToTable("METRIC");
                 });
 
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.NuclearPlant", b =>
@@ -140,31 +130,23 @@ namespace Global_Solution_ADB.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
                     b.Property<decimal>("FullCapacity")
-                        .HasColumnType("NUMBER(5, 2)");
-
-                    b.Property<string>("Localization")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("FULLCAPACITY");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("PLANTNAME");
 
                     b.Property<int>("NumberOfReactors")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("NUMBEROFREACTORS");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GlobalEnergy_NuclearPlant");
+                    b.ToTable("NUCLEARPLANT");
                 });
 
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Sensor", b =>
@@ -175,42 +157,43 @@ namespace Global_Solution_ADB.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.Property<string>("Location")
+                    b.Property<string>("MachinaryLocation")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("MACHINARYLOCATION");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("SENSORNAME");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("NUMBER(1)");
+                    b.Property<int>("NuclearPlantId")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_NUCLEARPLANT");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("CHAR(1)")
+                        .HasColumnName("STATUS");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GlobalEnergy_Sensor");
+                    b.HasIndex("NuclearPlantId");
+
+                    b.ToTable("SENSOR");
                 });
 
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Alert", b =>
                 {
-                    b.HasOne("Global_Solution_ADB.Models.Entities.Sensor", "Sensor")
+                    b.HasOne("Global_Solution_ADB.Models.Entities.Analysis", "Analysis")
                         .WithMany("Alerts")
-                        .HasForeignKey("SensorId")
+                        .HasForeignKey("AnalysisId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Sensor");
+                    b.Navigation("Analysis");
                 });
 
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Analysis", b =>
@@ -235,15 +218,31 @@ namespace Global_Solution_ADB.Migrations
                     b.Navigation("NuclearPlant");
                 });
 
+            modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Sensor", b =>
+                {
+                    b.HasOne("Global_Solution_ADB.Models.Entities.NuclearPlant", "NuclearPlant")
+                        .WithMany("Sensors")
+                        .HasForeignKey("NuclearPlantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NuclearPlant");
+                });
+
+            modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Analysis", b =>
+                {
+                    b.Navigation("Alerts");
+                });
+
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.NuclearPlant", b =>
                 {
                     b.Navigation("Metrics");
+
+                    b.Navigation("Sensors");
                 });
 
             modelBuilder.Entity("Global_Solution_ADB.Models.Entities.Sensor", b =>
                 {
-                    b.Navigation("Alerts");
-
                     b.Navigation("Analyses");
                 });
 #pragma warning restore 612, 618

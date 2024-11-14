@@ -1,27 +1,26 @@
-﻿using Microsoft.AspNetCore.Routing.Constraints;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Solution_ADB.Models.Entities;
 
-[Table("GlobalEnergy_NuclearPlant")]
+[Table("NUCLEARPLANT")]
 public class NuclearPlant : _BaseEntity //Usina Nuclear (Nuclear Power Plant)
 {
+    [Column("PLANTNAME")]
     [Required]
-    [StringLength(100)]
-    public string Name { get; set; } // Nome da usina nuclear
-    
-    [Required]
-    [StringLength(100)]
-    public string Localization { get; set; } // Localização da usina nuclear (ex.: cidade, país)
-    
-    [Range(0, 100)]
-    [Column(TypeName = "NUMBER(5, 2)")]
-    public float FullCapacity { get; set; } // Capacidade total de geração de energia da usina (em MW)
-    
-    [Required]
-    public int NumberOfReactors { get; set; } // Número total de reatores nucleares na usina
+    [StringLength(50)]
+    public string Name { get; set; }
 
-    //Propriedade de navegação para as métricas associadas à usina
+    [Column("FULLCAPACITY", TypeName = "NUMBER")]
+    [Required]
+    public decimal FullCapacity { get; set; }
+
+    [Column("NUMBEROFREACTORS")]
+    [Required]
+    public int NumberOfReactors { get; set; }
+
+    // Navegação
+    public ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
     public ICollection<Metric> Metrics { get; set; } = new List<Metric>();
 }
