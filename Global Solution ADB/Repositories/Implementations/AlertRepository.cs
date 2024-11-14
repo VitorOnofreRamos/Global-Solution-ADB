@@ -4,7 +4,7 @@ using Global_Solution_ADB.Repositories.Interfaces;
 
 namespace Global_Solution_ADB.Repositories.Implementations;
 
-public class AlertRepository : _Repository<Alert>, IAlertRepository
+public class AlertRepository : _Repository<LogAlert>, IAlertRepository
 {
     public AlertRepository(ApplicationDbContext context) : base(context) { }
 }

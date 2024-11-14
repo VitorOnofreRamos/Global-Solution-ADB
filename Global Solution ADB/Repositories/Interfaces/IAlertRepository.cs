@@ -2,4 +2,4 @@
 
 namespace Global_Solution_ADB.Repositories.Interfaces;
 
-public interface IAlertRepository : _IRepository<Alert> { }
+public interface IAlertRepository : _IRepository<LogAlert> { }

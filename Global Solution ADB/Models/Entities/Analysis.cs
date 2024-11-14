@@ -21,5 +21,5 @@ public class Analysis : _BaseEntity
     public virtual Sensor Sensor { get; set; }
 
     // Navegação
-    public ICollection<Alert> Alerts { get; set; } = new List<Alert>();
+    public ICollection<LogAlert> LogAlerts { get; set; } = new List<LogAlert>();
 }

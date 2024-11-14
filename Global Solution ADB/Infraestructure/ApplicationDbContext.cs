@@ -12,7 +12,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Metric> Metrics { get; set; }
     public DbSet<Sensor> Sensors { get; set; }
     public DbSet<Analysis> Analyzes { get; set; }
-    public DbSet<Alert> Alerts { get; set; }
+    public DbSet<LogAlert> LogAlerts { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ public class ApplicationDbContext : DbContext
                 v => v ? "1" : "0",
                 v => v == "1");
 
-        modelBuilder.Entity<Alert>()
+        modelBuilder.Entity<LogAlert>()
             .Property(e => e.IsResolved)
             .HasColumnName("ISRESOLVED")
             .HasColumnType("CHAR(1)")
@@ -51,7 +51,7 @@ public class ApplicationDbContext : DbContext
             .Property(a => a.Id)
             .HasColumnName("ID_ANALYSIS");
 
-        modelBuilder.Entity<Alert>()
+        modelBuilder.Entity<LogAlert>()
             .Property(al => al.Id)
             .HasColumnName("ID_ALERT");
 
@@ -78,41 +78,11 @@ public class ApplicationDbContext : DbContext
 
         // Relacionamento Analysis -> Alert (1:N)
         modelBuilder.Entity<Analysis>()
-            .HasMany(a => a.Alerts)
+            .HasMany(a => a.LogAlerts)
             .WithOne(al => al.Analysis)
             .HasForeignKey(al => al.AnalysisId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Chamando o procedimento PL/SQL para criar as sequências para cada tabela
-        //CreateSequenceForTable("NuclearPlant");
-        //CreateSequenceForTable("Metric");
-        //CreateSequenceForTable("Sensor");
-        //CreateSequenceForTable("Analysis");
-        //CreateSequenceForTable("Alert");
-
         base.OnModelCreating(modelBuilder);
     }
-
-    //private void CreateSequenceForTable(string tableName)
-    //{
-    //    using(var connection = Database.GetDbConnection())
-    //    {
-    //        try
-    //        {
-    //            connection.Open();
-    //            using (var command = connection.CreateCommand())
-    //            {
-    //                command.CommandText = "BEGIN Create_Sequence_For_Table(:tableName); END;";
-    //                command.CommandType = System.Data.CommandType.Text;
-    //                command.Parameters.Add(new OracleParameter(":tablename", tableName));
-
-    //                command.ExecuteNonQuery();
-    //            }
-    //        }
-    //        catch (Exception ex) 
-    //        {
-    //            Console.WriteLine($"Error ao criar sequência para a tabela {tableName}: {ex.Message}");
-    //        }
-    //    }
-    //}
 }
