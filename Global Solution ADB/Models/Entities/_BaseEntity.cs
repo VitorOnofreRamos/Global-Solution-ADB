@@ -6,6 +6,6 @@ namespace Global_Solution_ADB.Models.Entities;
 public abstract class _BaseEntity
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 }
