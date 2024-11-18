@@ -18,9 +18,11 @@ public class NuclearPlantController : Controller
 
     //GET: /nuclearplants
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchTerm)
     {
-        var nuclearplants = await _nuclearPlantService.GetAllNuclearPlantsAsync();
+        ViewData["SearchTerm"] = searchTerm;
+
+        var nuclearplants = await _nuclearPlantService.SearchNuclearPlantAsync(searchTerm);
 
         var nuclearplantsDTOS = nuclearplants.Select(a => new NuclearPlantDTO
         {
