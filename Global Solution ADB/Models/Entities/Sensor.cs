@@ -28,5 +28,5 @@ public class Sensor : _BaseEntity
 
     //Navegação
     public ICollection<Analysis> Analyses { get; set; } = new List<Analysis>();
-    public ICollection<SensorType> SensorTypes { get; set; } = new List<SensorType>();
+    public SensorType SensorType { get; set; }
 }

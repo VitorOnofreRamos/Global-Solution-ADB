@@ -20,3 +20,21 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.custom-body {
+    background-color: #fafaf7 !important;
+    padding-bottom: 150px;
+}
+
+.custom-footer{
+    height: 150px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}

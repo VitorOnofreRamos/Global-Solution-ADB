@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Global_Solution_ADB.Models.Entities;
 
-[Table("ALERT")]
+[Table("LOGALERT")]
 public class LogAlert : _BaseEntity
 {
     [Column("ALERTDESCRIPTION")]

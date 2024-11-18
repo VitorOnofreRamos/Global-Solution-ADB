@@ -18,7 +18,7 @@ namespace Global_Solution_ADB.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }

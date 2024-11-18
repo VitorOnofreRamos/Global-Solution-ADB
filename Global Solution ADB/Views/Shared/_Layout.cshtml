@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Global_Solution_ADB</title>
+    <title>@ViewData["Title"] - SAMEN</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Global_Solution_ADB.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="custom-body">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        @Html.Partial("_NavBar")
+@*         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Global_Solution_ADB</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,7 +29,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> *@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -36,9 +37,19 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted custom-footer bg-black">
         <div class="container">
-            &copy; 2024 - Global_Solution_ADB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <span>&copy; 2024 - Global_Solution_ADB - <a asp-area="" asp-controller="Home" asp-action="About">About</a></span>
+
+            <div class="row">
+                <p><b>Integrantes</b></p>
+                <ul>   
+                    <li>Vitor Onofre Ramos - RM553241</li>
+                    <li>Pedro Henrique Soares Araujo - RM553801</li>
+                    <li>Beatriz Silva - RM552600</li>
+                </ul>
+
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

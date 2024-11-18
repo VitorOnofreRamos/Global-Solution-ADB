@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<NuclearPlant> NuclearPlants { get; set; }
     public DbSet<Metric> Metrics { get; set; }
     public DbSet<Sensor> Sensors { get; set; }
+    public DbSet<SensorType> SensorTypes { get; set; }
     public DbSet<Analysis> Analyzes { get; set; }
     public DbSet<LogAlert> LogAlerts { get; set; }
 
@@ -47,6 +48,10 @@ public class ApplicationDbContext : DbContext
             .Property(s => s.Id)
             .HasColumnName("ID_SENSOR");
 
+        modelBuilder.Entity<SensorType>()
+            .Property(st => st.Id)
+            .HasColumnName("ID_SENSORTYPE");
+
         modelBuilder.Entity<Analysis>()
             .Property(a => a.Id)
             .HasColumnName("ID_ANALYSIS");
@@ -74,6 +79,13 @@ public class ApplicationDbContext : DbContext
             .HasMany(s => s.Analyses)
             .WithOne(a => a.Sensor)
             .HasForeignKey(a => a.SensorId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Relacionamento Sensor -> SensorType (1:1)
+        modelBuilder.Entity<Sensor>()
+            .HasOne(s => s.SensorType)
+            .WithOne(st => st.Sensor)
+            .HasForeignKey<SensorType>(st => st.SensorId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // Relacionamento Analysis -> Alert (1:N)

@@ -1,5 +1,8 @@
 using Global_Solution_ADB.Infraestructure;
+using Global_Solution_ADB.Repositories.Interfaces;
+using Global_Solution_ADB.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
+using Global_Solution_ADB.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,12 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("FiapOracleConnection")));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<INuclearPlantRepository, NuclearPlantRepository>();
+
+builder.Services.AddScoped<NuclearPlantService>();
 
 
 var app = builder.Build();
