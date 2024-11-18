@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "SAMEM";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
@@ -7,5 +7,10 @@
     <h2 class="display-5">Sistema de Análise e Monitoramento de Eficiência Nuclear</h2>
     <p>Texte</p>
 
-    <a asp-controller="NuclearPlant" asp-action="Index">Click Here</a>
+    <a asp-controller="NuclearPlant" asp-action="Index">NuclearPlant</a>
+    <a asp-controller="Metric" asp-action="Index">Metric</a>
+    <a asp-controller="Sensor" asp-action="Index">Sensor</a>
+    <a asp-controller="SensorType" asp-action="Index">SensorType</a>
+    <a asp-controller="Analysis" asp-action="Index">Analysis</a>
+    <a asp-controller="LogAlert" asp-action="Index">LogAlert</a>
 </div>

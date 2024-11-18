@@ -6,37 +6,64 @@
 
 <h2 class="mt-3">@ViewData["Title"]</h2>
 
-<div class="card">
-	<a asp-controller="NuclearPlant" asp-action="Create" class="btn btn-primary m-2">Register new Nuclear Plant</a>
-	<div class="card-body">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>FullCapacity</th>
-					<th>NumberOfReactors</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var nuclearPlantItem in Model)
-				{
-					<tr>
-						<td>@nuclearPlantItem.Id</td>
-						<td>@nuclearPlantItem.Name</td>
-						<td>@nuclearPlantItem.FullCapacity</td>
-						<td>@nuclearPlantItem.NumberOfReactors</td>
-						<td>
-							<div class="d-inline-flex">
-								<a asp-controller="NuclearPlant" asp-action="Details" asp-route-id="@nuclearPlantItem.Id" class="btn btn-info btn-sm m-1">Details</a>
-								<a asp-controller="NuclearPlant" asp-action="Edit" asp-route-id="@nuclearPlantItem.Id" class="btn btn-warning btn-sm m-1">Edit</a>
-								<a asp-controller="NuclearPlant" asp-action="Delete" asp-route-id="@nuclearPlantItem.Id" class="btn btn-danger btn-sm m-1">Delete</a>
-							</div>
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
+<form method="get" asp-action="Index" class="mb-4">
+	<div class="input-group">
+		<input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" class="form-control" placeholder="Search for a nuclear plant..."/>
 	</div>
+</form>
+
+<div class="card">
+    <a asp-controller="NuclearPlant" asp-action="Create" class="btn btn-primary m-2">Register new Nuclear Plant</a>
+
+    <div class="card-body">
+        <form method="get">
+            <div class="row">
+                <div class="col">
+                    <label for="NameFilter">Name:</label>
+                    <input type="text" id="NameFilter" name="Name" value="@ViewData["Name"]" class="form-control" />
+                </div>
+                <div class="col">
+                    <label for="CapacityFilter">Full Capacity:</label>
+                    <input type="text" id="CapacityFilter" name="FullCapacity" value="@ViewData["FullCapacity"]" class="form-control" />
+                </div>
+                <div class="col">
+                    <label for="ReactorFilter">Number of Reactors:</label>
+                    <input type="text" id="ReactorFilter" name="NumberOfReactors" value="@ViewData["NumberOfReactors"]" class="form-control" />
+                </div>
+                <div class="col d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Full Capacity</th>
+                    <th>Number of Reactors</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var nuclearPlantItem in Model)
+                {
+                    <tr>
+                        <td>@nuclearPlantItem.Id</td>
+                        <td>@nuclearPlantItem.Name</td>
+                        <td>@nuclearPlantItem.FullCapacity</td>
+                        <td>@nuclearPlantItem.NumberOfReactors</td>
+                        <td>
+                            <div class="d-inline-flex">
+                                <a asp-controller="NuclearPlant" asp-action="Details" asp-route-id="@nuclearPlantItem.Id" class="btn btn-info btn-sm m-1">Details</a>
+                                <a asp-controller="NuclearPlant" asp-action="Edit" asp-route-id="@nuclearPlantItem.Id" class="btn btn-warning btn-sm m-1">Edit</a>
+                                <a asp-controller="NuclearPlant" asp-action="Delete" asp-route-id="@nuclearPlantItem.Id" class="btn btn-danger btn-sm m-1">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

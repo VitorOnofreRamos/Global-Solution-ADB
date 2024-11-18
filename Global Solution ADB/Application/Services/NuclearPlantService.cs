@@ -1,5 +1,6 @@
 ﻿using Global_Solution_ADB.Models.Entities;
 using Global_Solution_ADB.Repositories.Interfaces;
+using System.Linq.Expressions;
 
 namespace Global_Solution_ADB.Application.Services;
 
@@ -27,16 +28,27 @@ public class NuclearPlantService
     public async Task RemoveNuclearPlantAsync(int id) =>
         await _nuclearPlantRepository.RemoveAsync(id);
 
-    public async Task<IEnumerator<NuclearPlant>> SearchNuclearPlantAsync(string searchTerm)
+    public async Task<IEnumerable<NuclearPlant>> SearchNuclearPlantAsync(string name, string fullCapacity, string numberOfReactors)
     {
-        if (string.IsNullOrEmpty(searchTerm))
+        // Carregar todas as usinas nucleares do banco de dados
+        var nuclearPlants = await _nuclearPlantRepository.GetAllAsync();
+
+        // Aplicar filtros dinamicamente
+        if (!string.IsNullOrEmpty(name))
         {
-            return await _nuclearPlantRepository.GetAllAsync();
+            nuclearPlants = nuclearPlants.Where(np => np.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        return await _nuclearPlantRepository.FindAsync(np =>
-            np.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-            np.FullCapacity.ToString().Contains(searchTerm) ||
-            np.NumberOfReactors.ToString().Contains(searchTerm));
+        if (!string.IsNullOrEmpty(fullCapacity) && decimal.TryParse(fullCapacity, out decimal capacity))
+        {
+            nuclearPlants = nuclearPlants.Where(np => np.FullCapacity == capacity).ToList();
+        }
+
+        if (!string.IsNullOrEmpty(numberOfReactors) && int.TryParse(numberOfReactors, out int reactors))
+        {
+            nuclearPlants = nuclearPlants.Where(np => np.NumberOfReactors == reactors).ToList();
+        }
+
+        return nuclearPlants;
     }
 }

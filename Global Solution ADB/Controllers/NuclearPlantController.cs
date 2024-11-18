@@ -18,13 +18,18 @@ public class NuclearPlantController : Controller
 
     //GET: /nuclearplants
     [HttpGet]
-    public async Task<IActionResult> Index(string searchTerm)
+    public async Task<IActionResult> Index(string name, string fullCapacity, string numberOfReactors)
     {
-        ViewData["SearchTerm"] = searchTerm;
+        // Armazena os filtros no ViewData para acessá-los na View
+        ViewData["Name"] = name;
+        ViewData["FullCapacity"] = fullCapacity;
+        ViewData["NumberOfReactors"] = numberOfReactors;
 
-        var nuclearplants = await _nuclearPlantService.SearchNuclearPlantAsync(searchTerm);
+        // Chama o serviço para obter as usinas nucleares filtradas
+        var nuclearPlants = await _nuclearPlantService.SearchNuclearPlantAsync(name, fullCapacity, numberOfReactors);
 
-        var nuclearplantsDTOS = nuclearplants.Select(a => new NuclearPlantDTO
+        // Mapeia as usinas nucleares para DTOs antes de enviar para a view
+        var nuclearplantsDTOS = nuclearPlants.Select(a => new NuclearPlantDTO
         {
             Id = a.Id,
             Name = a.Name,
