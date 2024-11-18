@@ -18,11 +18,11 @@ public class MetricService
     public async Task<IEnumerable<Metric>> GetAllMetricsAsync() =>
         await _metricRepository.GetAllAsync();
 
-    public async Task AddMetricAsync(Metric metricRepository) =>
-        await _metricRepository.AddAsync(metricRepository);
+    public async Task AddMetricAsync(Metric metric) =>
+        await _metricRepository.AddAsync(metric);
 
-    public async Task UpdateMetricAsync(Metric metricRepository) =>
-        await _metricRepository.UpdateAsync(metricRepository);
+    public async Task UpdateMetricAsync(Metric metric) =>
+        await _metricRepository.UpdateAsync(metric);
 
     public async Task RemoveMetricAsync(int id) =>
         await _metricRepository.RemoveAsync(id);

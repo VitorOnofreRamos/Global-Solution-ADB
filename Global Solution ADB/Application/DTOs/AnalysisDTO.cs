@@ -21,5 +21,5 @@ public class AnalysisDTO
     public virtual Sensor Sensor { get; set; }
 
     // Navegação
-    public ICollection<AlertDTO> LogAlerts { get; set; } = new List<AlertDTO>();
+    public ICollection<LogAlertDTO> LogAlerts { get; set; } = new List<LogAlertDTO>();
 }

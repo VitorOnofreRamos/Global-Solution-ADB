@@ -26,17 +26,4 @@ public class NuclearPlantService
 
     public async Task RemoveNuclearPlantAsync(int id) =>
         await _nuclearPlantRepository.RemoveAsync(id);
-
-    public async Task<IEnumerator<NuclearPlant>> SearchNuclearPlantAsync(string searchTerm)
-    {
-        if (string.IsNullOrEmpty(searchTerm))
-        {
-            return await _nuclearPlantRepository.GetAllAsync();
-        }
-
-        return await _nuclearPlantRepository.FindAsync(np =>
-            np.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-            np.FullCapacity.ToString().Contains(searchTerm) ||
-            np.NumberOfReactors.ToString().Contains(searchTerm));
-    }
 }

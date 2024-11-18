@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Global_Solution_ADB.Application.DTOs;
 
-public class AlertDTO
+public class LogAlertDTO
 {
     public int? Id { get; set; }
 

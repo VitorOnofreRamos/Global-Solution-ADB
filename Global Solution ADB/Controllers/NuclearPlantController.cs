@@ -1,6 +1,8 @@
 ﻿using Global_Solution_ADB.Application.DTOs;
 using Global_Solution_ADB.Application.Services;
+using Global_Solution_ADB.Infraestructure;
 using Global_Solution_ADB.Models.Entities;
+using Global_Solution_ADB.Views.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -9,20 +11,20 @@ namespace Global_Solution_ADB.Controllers;
 [Route("NuclearPlant")]
 public class NuclearPlantController : Controller
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly NuclearPlantService _nuclearPlantService;
 
-    public NuclearPlantController(NuclearPlantService nuclearPlantService)
+    public NuclearPlantController(IUnitOfWork unitOfWork, NuclearPlantService nuclearPlantService)
     {
+        _unitOfWork = unitOfWork;
         _nuclearPlantService = nuclearPlantService;
     }
 
-    //GET: /nuclearplants
+    //GET: /nuclearplant
     [HttpGet]
-    public async Task<IActionResult> Index(string searchTerm)
+    public async Task<IActionResult> Index()
     {
-        ViewData["SearchTerm"] = searchTerm;
-
-        var nuclearplants = await _nuclearPlantService.SearchNuclearPlantAsync(searchTerm);
+        var nuclearplants = await _nuclearPlantService.GetAllNuclearPlantsAsync();
 
         var nuclearplantsDTOS = nuclearplants.Select(a => new NuclearPlantDTO
         {
@@ -35,14 +37,35 @@ public class NuclearPlantController : Controller
         return View(nuclearplantsDTOS);
     }
 
-    //GET: /appointment/create
+    //GET: /nuclearplant/details/{id}
+    [HttpGet("Details/{id}")]
+    public async Task<IActionResult> Details (int id)
+    {
+        var nuclearplant= await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
+        if(nuclearplant == null)
+        {
+            return NotFound();
+        }
+
+        var viewModel = new NuclearPlantViewModel
+        {
+            Id = nuclearplant.Id,
+            Name = nuclearplant.Name,
+            FullCapacity = nuclearplant.FullCapacity,
+            NumberOfReactors = nuclearplant.NumberOfReactors
+        };
+
+        return View(viewModel);
+    }
+
+    //GET: /nuclearplantst/create
     [HttpGet("Create")]
     public IActionResult Create()
     {
         return View();
     }
 
-    //POST: appointment/create
+    //POST: nuclearplant/create
     [HttpPost("Create")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(NuclearPlantDTO dto)
@@ -57,7 +80,7 @@ public class NuclearPlantController : Controller
             };
 
             await _nuclearPlantService.AddNuclearPlantAsync(nuclearPlant);
-            return RedirectToAction("Index");
+            return Redirect("~/NuclearPlant");
         }
 
         foreach(var modelState in ModelState.Values)
@@ -71,4 +94,76 @@ public class NuclearPlantController : Controller
         return View(dto);
     }
 
+    //GET: /nuclearplant/delete/{id}
+    [HttpGet("Delete/{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var nuclearplant = await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
+        if(nuclearplant == null)
+        {
+            return NotFound();
+        }
+
+        return View(new NuclearPlantDTO { Id = nuclearplant.Id});
+    }
+
+    //DELETE: /nuclearplant/delete/{id}
+    [HttpDelete("Delete/{id}")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        await _nuclearPlantService.RemoveNuclearPlantAsync(id);
+        return Redirect("~/NuclearPlant");
+    }
+
+    //GET: /nuclearplant/edit/{id}
+    [HttpGet("Edit/{id}")]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var nuclearplant = await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
+        if (nuclearplant == null)
+        {
+            return NotFound();
+        }
+
+        var dto = new NuclearPlantDTO
+        {
+            Id = nuclearplant.Id,
+            Name = nuclearplant.Name,
+            FullCapacity = nuclearplant.FullCapacity,
+            NumberOfReactors = nuclearplant.NumberOfReactors
+        };
+
+        return View(dto);
+    }
+
+
+    //POST: /nuclearplant/edit/{id}
+    [HttpPost("Edit/{id}")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, NuclearPlantDTO dto)
+    {
+        if(id != dto.Id)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid) 
+        {
+            var nuclearplant = await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
+            if (nuclearplant == null) 
+            {
+                return NotFound();
+            }
+
+            nuclearplant.Name = dto.Name;
+            nuclearplant.FullCapacity = dto.FullCapacity;
+            nuclearplant.NumberOfReactors = dto.NumberOfReactors;
+
+            await _nuclearPlantService.UpdateNuclearPlantAsync(nuclearplant);
+
+            return Redirect("~/NuclearPlant");
+        }
+
+        return View(dto);
+    }
 }
