@@ -27,16 +27,16 @@ public class NuclearPlantService
     public async Task RemoveNuclearPlantAsync(int id) =>
         await _nuclearPlantRepository.RemoveAsync(id);
 
-    public async Task<IEnumerator<NuclearPlant>> SearchNuclearPlantAsync(string searchTerm)
-    {
-        if (string.IsNullOrEmpty(searchTerm))
-        {
-            return (IEnumerator<NuclearPlant>)await _nuclearPlantRepository.GetAllAsync();
-        }
+    //public async Task<IEnumerator<NuclearPlant>> SearchNuclearPlantAsync(string searchTerm)
+    //{
+    //    if (string.IsNullOrEmpty(searchTerm))
+    //    {
+    //        return (IEnumerator<NuclearPlant>)await _nuclearPlantRepository.GetAllAsync();
+    //    }
 
-        return (IEnumerator<NuclearPlant>)await _nuclearPlantRepository.FindAsync(np =>
-            np.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-            np.FullCapacity.ToString().Contains(searchTerm) ||
-            np.NumberOfReactors.ToString().Contains(searchTerm));
-    }
+    //    return (IEnumerator<NuclearPlant>)await _nuclearPlantRepository.FindAsync(np =>
+    //        np.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+    //        np.FullCapacity.ToString().Contains(searchTerm) ||
+    //        np.NumberOfReactors.ToString().Contains(searchTerm));
+    //}
 }
