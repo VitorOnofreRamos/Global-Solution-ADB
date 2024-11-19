@@ -104,7 +104,15 @@ public class NuclearPlantController : Controller
             return NotFound($"Usina com ID {id} não encontrada.");
         }
 
-        return View(new NuclearPlantDTO { Id = nuclearplant.Id});
+        var dto = new NuclearPlantDTO
+        {
+            Id = nuclearplant.Id,
+            Name = nuclearplant.Name,
+            FullCapacity = nuclearplant.FullCapacity,
+            NumberOfReactors = nuclearplant.NumberOfReactors
+        };
+
+        return View(dto);
     }
 
     //DELETE: /nuclearplant/delete/{id}
