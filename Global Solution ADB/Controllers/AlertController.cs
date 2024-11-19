@@ -1,6 +1,7 @@
-﻿using Global_Solution_ADB.Application.Services;
+﻿using Global_Solution_ADB.Application.DTOs;
+using Global_Solution_ADB.Application.Services;
+using Global_Solution_ADB.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Global_Solution_ADB.Controllers;
 
@@ -19,19 +20,39 @@ public class AlertController : Controller
     public async Task<IActionResult> Index()
     {
         var alerts = await _alertService.GetAllAlertAsync();
-        return View(alerts);
+
+        var alertDTOS = alerts.Select(a => new LogAlertDTO
+        {
+            Id = a.Id,
+            AnalysisId = a.AnalysisId,
+            TriggeredAt = a.TriggeredAt,
+            IsResolved = a.IsResolved,
+        }).ToList();
+
+        return View(alertDTOS);
     }
 
     //GET /Alert/Details/{id}
+    [HttpGet("Details/{id}")]
     public async Task<IActionResult> Details(int id)
     {
-        var alerts = await _alertService.GetAlertByIdAsync(id);
-        if (alerts == null)
+        var alert = await _alertService.GetAlertByIdAsync(id);
+        if (alert == null)
         {
-            return NotFound();
+            return NotFound($"Alerta com ID {id} não encontrada.");
         }
 
-        return View(alerts);
+        var viewModel = new AlertViewModel
+        {
+            AlertId = alert.Id,
+            Descrtiption = alert.Description,
+            TriggeredAt = alert.TriggeredAt,
+            ResolvedAt = alert.ResolvedAt,
+            IsResolved = alert.IsResolved,
+            AnalysisId= alert.Analysis.Id,
+        };
+
+        return View(viewModel);
     }
 
     //GET: /Alert/Delete/{id}
@@ -57,6 +78,7 @@ public class AlertController : Controller
 
     //PUT: /Alert/Resolve/{id}
     [HttpPost("Resolve/{id}")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Resolve(int id)
     {
         var success = await _alertService.ResolveAlertAsync(id);

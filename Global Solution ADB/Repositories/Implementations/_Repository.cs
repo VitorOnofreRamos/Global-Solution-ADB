@@ -44,7 +44,7 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
     public async Task UpdateAsync(T entity)
     {
         var serachId = await GetByIdAsync(entity.Id);
-        if (serachId == null) {
+        if (serachId != null) {
             _entities.Update(entity);
             await _context.SaveChangesAsync();
         }

@@ -29,7 +29,7 @@
 						<td>@nuclearPlantItem.NumberOfReactors</td>
 						<td>
 							<div class="d-inline-flex">
-								<a asp-controller="Monitoring" asp-action="" asp-route-id="@nuclearPlantItem.Id" class="btn btn-info btn-sm m-1">Details</a>
+								<a asp-controller="NuclearPlant" asp-action="Details" asp-route-id="@nuclearPlantItem.Id" class="btn btn-info btn-sm m-1">Details</a>
 								<a asp-controller="NuclearPlant" asp-action="Edit" asp-route-id="@nuclearPlantItem.Id" class="btn btn-warning btn-sm m-1">Edit</a>
 								<a asp-controller="NuclearPlant" asp-action="Delete" asp-route-id="@nuclearPlantItem.Id" class="btn btn-danger btn-sm m-1">Remove</a>
 							</div>

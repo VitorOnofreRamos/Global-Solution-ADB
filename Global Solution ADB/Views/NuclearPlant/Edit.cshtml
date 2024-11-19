@@ -12,21 +12,21 @@
 
     <div class="form-group">
         <label asp-for="Name">Nome da Usina</label>
-        <span class="text-info">"Nome que identifique a usina".</span>
+        <span class="text-info small">"Nome que identifique a usina".</span>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="FullCapacity">Capacidade Eletrica Total da Usina</label>
-        <span class="text-info">"A capacidade máxima de geração de energia em gigawatts (GW)".</span>
+        <span class="text-info small">"A capacidade máxima de geração de energia em gigawatts (GW), Ex:(450.05)".</span>
         <input asp-for="FullCapacity" class="form-control" required />
         <span asp-validation-for="FullCapacity" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="NumberOfReactors">Número de Reatores na Usina</label>
-        <span class="text-info">"Quantidade de reatores nucleares em operação na usina".</span>
+        <span class="text-info small">"Quantidade de reatores nucleares em operação na usina".</span>
         <input asp-for="NumberOfReactors" class="form-control" required />
         <span asp-validation-for="NumberOfReactors" class="text-danger"></span>
     </div>

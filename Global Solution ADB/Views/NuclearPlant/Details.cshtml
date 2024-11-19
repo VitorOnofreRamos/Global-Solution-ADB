@@ -1,0 +1,34 @@
+﻿@model Global_Solution_ADB.Application.ViewModels.NuclearPlantViewModel;
+@{
+	ViewData["Title"] = "Detalhes da Usina";
+}
+
+<h2 class="mt-3">@ViewData["Title"]</h2>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h4>Informações da Usina</h4>
+
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">@Model.NuclearPlantId</dd>
+
+            <dt class="col-sm-3">Nome da Usina</dt>
+            <dd class="col-sm-9">@Model.NuclearPlantName</dd>
+
+            <dt class="col-sm-3">Capacidade Eletrica Total</dt>
+            <dd class="col-sm-9">@Model.FullCapacity.ToString("F2")</dd>
+
+            <dt class="col-sm-3">Numero de Reatores</dt>
+            <dd class="col-sm-9">@Model.NumberOfReactors</dd>
+        </dl>
+
+        <h4>Metrica coletada</h4>
+        <dl class="row">
+            <dt>Título</dt>
+            <dd>Texto</dd>
+        </dl>
+
+        <a href="@Url.Action("Index", "NuclearPlant")" class="btn btn-primary mt-3">Voltar para a Lista</a>
+    </div>
+</div>

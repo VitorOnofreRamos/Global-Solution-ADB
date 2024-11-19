@@ -37,29 +37,29 @@ public class NuclearPlantController : Controller
         return View(nuclearplantsDTOS);
     }
 
-    //GET: /nuclearplant/details/{id}
-    //[HttpGet("Details/{id}")]
-    //public async Task<IActionResult> Details (int id)
-    //{
-    //    var nuclearplant= await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
-    //    if(nuclearplant == null)
-    //    {
-    //        return NotFound();
-    //    }
+    //GET: /Nuclearplant/Details/{id}
+    [HttpGet("Details/{id}")]
+    public async Task<IActionResult> Details(int id)
+    {
+        var nuclearplant = await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
+        if (nuclearplant == null)
+        {
+            return NotFound($"Usina com ID {id} não encontrada.");
+        }
 
-    //    var viewModel = new NuclearPlantViewModel
-    //    {
-    //        Id = nuclearplant.Id,
-    //        Name = nuclearplant.Name,
-    //        FullCapacity = nuclearplant.FullCapacity,
-    //        NumberOfReactors = nuclearplant.NumberOfReactors
-    //    };
+        var viewModel = new NuclearPlantViewModel
+        {
+            NuclearPlantId = nuclearplant.Id,
+            NuclearPlantName = nuclearplant.Name,
+            FullCapacity = nuclearplant.FullCapacity,
+            NumberOfReactors = nuclearplant.NumberOfReactors,
+        };
 
-    //    return View(viewModel);
-    //}
+        return View(viewModel);
+    }
 
-    //GET: /nuclearplantst/create
-    [HttpGet("Create")]
+	//GET: /nuclearplantst/create
+	[HttpGet("Create")]
     public IActionResult Create()
     {
         return View();
@@ -112,7 +112,7 @@ public class NuclearPlantController : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _nuclearPlantService.RemoveNuclearPlantAsync(id);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", "NuclearPlant");
     }
 
     //GET: /nuclearplant/edit/{id}
@@ -137,7 +137,7 @@ public class NuclearPlantController : Controller
     }
 
 
-    //POST: /nuclearplant/edit/{id}
+    //PUT: /nuclearplant/edit/{id}
     [HttpPost("Edit/{id}")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, NuclearPlantDTO dto)
