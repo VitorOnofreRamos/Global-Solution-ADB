@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Global_Solution_ADB.Views.ViewModels;
+namespace Global_Solution_ADB.Application.ViewModels;
 
 public class NuclearPlantViewModel
 {

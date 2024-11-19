@@ -1,0 +1,35 @@
+﻿@model Global_Solution_ADB.Application.ViewModels.MonitoringViewModel
+
+<div>
+    <h2>Monitoramento - Usina @Model.NuclearPlantName</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sensor</th>
+                <th>Localização</th>
+                <th>Valor Atual</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sensor in Model.Sensors)
+            {
+                <tr>
+                    <td>@sensor.Name</td>
+                    <td>@sensor.MachinaryLocation</td>
+                    <td>@sensor.CurrentValue?.ToString() ?? "N/A"</td>
+                    <td>
+                        @if (sensor.Status)
+                        {
+                            <span class="badge bg-success">Ativo</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Inativo</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

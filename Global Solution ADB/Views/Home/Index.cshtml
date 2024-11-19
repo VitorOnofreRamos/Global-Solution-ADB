@@ -5,7 +5,30 @@
 <div class="text-center">
     <h1 class="display-2 mt-3">@ViewData["Title"]</h1>
     <h2 class="display-5">Sistema de Análise e Monitoramento de Eficiência Nuclear</h2>
-    <p>Texte</p>
+    
+    <div class="d-inline-flex">
+        <a class="btn btn-outline-dark btn-sm m-1" asp-controller="NuclearPlant" asp-action="Index">Usinas</a>
+        <a class="btn btn-outline-dark btn-sm m-1" asp-controller="Alert" asp-action="Index">Alertas</a>
+        <a class="btn btn-outline-dark btn-sm m-1" asp-controller="Home" asp-action="About">Sobre</a>
+    </div>
+    
+    <div class="flex-column">
+        <form asp-action="InsertTestData" asp-controller="Home" method="post">
+            <button type="submit" class="btn btn-info btn-sm m-1">Inserir Dados de Teste</button>
+        </form>
 
-    <a asp-controller="NuclearPlant" asp-action="Index">Click Here</a>
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+    </div>
 </div>

@@ -1,4 +1,5 @@
-﻿using Global_Solution_ADB.Models.Entities;
+﻿using Global_Solution_ADB.Application.ViewModels;
+using Global_Solution_ADB.Models.Entities;
 using Global_Solution_ADB.Repositories.Interfaces;
 
 namespace Global_Solution_ADB.Application.Services;
@@ -26,4 +27,29 @@ public class NuclearPlantService
 
     public async Task RemoveNuclearPlantAsync(int id) =>
         await _nuclearPlantRepository.RemoveAsync(id);
+
+    public async Task<MonitoringViewModel> GetMonitoringDataAsync(int nuclearPlantId) 
+    {
+        var nuclearPlant = await _nuclearPlantRepository.FindAsync(np => np.Id == nuclearPlantId);
+
+        var plant = nuclearPlant.FirstOrDefault();
+        if (plant == null)
+        {
+            return null;
+        }
+
+        var sensors = plant.Sensors.Select(sensor => new SensorViewModel
+        {
+            Name = sensor.Name,
+            MachinaryLocation = sensor.MachinaryLocation,
+            CurrentValue = sensor.Analyses.OrderByDescending(a => a.Timestamp).FirstOrDefault()?.Value,
+            Status = sensor.Status,
+        });
+
+        return new MonitoringViewModel 
+        {
+            NuclearPlantName = plant.Name,
+            Sensors = sensors,
+        };
+    }
 }

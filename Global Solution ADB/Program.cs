@@ -16,8 +16,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<INuclearPlantRepository, NuclearPlantRepository>();
+builder.Services.AddScoped<ISensorRepository, SensorRepository>();
+builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 
 builder.Services.AddScoped<NuclearPlantService>();
+builder.Services.AddScoped<SensorService>();
+builder.Services.AddScoped<AlertService>();
 
 
 var app = builder.Build();

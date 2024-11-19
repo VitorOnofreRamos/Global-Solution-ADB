@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Global_Solution_ADB.Models.Entities.LogAlert>
+
+<h2>Alertas</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Resolução</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var alert in Model)
+        {
+            <tr>
+                <td>@alert.TriggeredAt</td>
+                <td>
+                    @if (!alert.IsResolved)
+                    {
+                        <form asp-controller="Alert" asp-action="Resolve" asp-route-id="@alert.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-success">Resolver</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Resolvido</span>
+                    }
+                </td>
+                <td>
+                    <div class="d-inline-flex">
+                        <form asp-controller="Alert" asp-action="Resolve" asp-route-id="@alert.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-success">Resolver</button>
+                        </form>
+
+                        <a asp-controller="Alert" asp-action="Details" asp-route-id="@alert.Id" class="btn btn-info btn-sm m-1">Details</a>
+                        <a asp-controller="Alert" asp-action="Delete" asp-route-id="@alert.Id" class="btn btn-danger btn-sm m-1">Remove</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

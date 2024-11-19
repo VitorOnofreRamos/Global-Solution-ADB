@@ -2,7 +2,7 @@
 using Global_Solution_ADB.Application.Services;
 using Global_Solution_ADB.Infraestructure;
 using Global_Solution_ADB.Models.Entities;
-using Global_Solution_ADB.Views.ViewModels;
+using Global_Solution_ADB.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -38,25 +38,25 @@ public class NuclearPlantController : Controller
     }
 
     //GET: /nuclearplant/details/{id}
-    [HttpGet("Details/{id}")]
-    public async Task<IActionResult> Details (int id)
-    {
-        var nuclearplant= await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
-        if(nuclearplant == null)
-        {
-            return NotFound();
-        }
+    //[HttpGet("Details/{id}")]
+    //public async Task<IActionResult> Details (int id)
+    //{
+    //    var nuclearplant= await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
+    //    if(nuclearplant == null)
+    //    {
+    //        return NotFound();
+    //    }
 
-        var viewModel = new NuclearPlantViewModel
-        {
-            Id = nuclearplant.Id,
-            Name = nuclearplant.Name,
-            FullCapacity = nuclearplant.FullCapacity,
-            NumberOfReactors = nuclearplant.NumberOfReactors
-        };
+    //    var viewModel = new NuclearPlantViewModel
+    //    {
+    //        Id = nuclearplant.Id,
+    //        Name = nuclearplant.Name,
+    //        FullCapacity = nuclearplant.FullCapacity,
+    //        NumberOfReactors = nuclearplant.NumberOfReactors
+    //    };
 
-        return View(viewModel);
-    }
+    //    return View(viewModel);
+    //}
 
     //GET: /nuclearplantst/create
     [HttpGet("Create")]
@@ -80,7 +80,7 @@ public class NuclearPlantController : Controller
             };
 
             await _nuclearPlantService.AddNuclearPlantAsync(nuclearPlant);
-            return Redirect("~/NuclearPlant");
+            return RedirectToAction("Index");
         }
 
         foreach(var modelState in ModelState.Values)
@@ -99,9 +99,9 @@ public class NuclearPlantController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         var nuclearplant = await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
-        if(nuclearplant == null)
+        if (nuclearplant == null)
         {
-            return NotFound();
+            return NotFound($"Usina com ID {id} não encontrada.");
         }
 
         return View(new NuclearPlantDTO { Id = nuclearplant.Id});
@@ -112,7 +112,7 @@ public class NuclearPlantController : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _nuclearPlantService.RemoveNuclearPlantAsync(id);
-        return Redirect("~/NuclearPlant");
+        return RedirectToAction("Index");
     }
 
     //GET: /nuclearplant/edit/{id}
@@ -161,7 +161,7 @@ public class NuclearPlantController : Controller
 
             await _nuclearPlantService.UpdateNuclearPlantAsync(nuclearplant);
 
-            return Redirect("~/NuclearPlant");
+            return RedirectToAction("Index");
         }
 
         return View(dto);
