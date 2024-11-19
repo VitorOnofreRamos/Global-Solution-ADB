@@ -55,6 +55,27 @@ public class AlertController : Controller
         return View(viewModel);
     }
 
+    //GET:  /Alert/ByNuclearPlant/{nuclearPlantId}
+    [HttpGet("ByNuclearPlant/{nuclearPlantId}")]
+    public async Task<IActionResult> AlertsByNuclearPlant(int nuclearPlantId)
+    {
+        var alerts = await _alertService.GetAlertsByNuclearPlantAsync(nuclearPlantId);
+        if (alerts == null || !alerts.Any())
+        {
+            return NotFound($"Nenhum alerta encontrado para a Usina com ID {nuclearPlantId}.");
+        }
+
+        var alertDTOS = alerts.Select(a => new LogAlertDTO
+        {
+            Id = a.Id,
+            AnalysisId = a.AnalysisId,
+            TriggeredAt = a.TriggeredAt,
+            IsResolved = a.IsResolved,
+        }).ToList();
+
+        return View("Index", alertDTOS); // Reutiliza a View Index para exibir os alertas
+    }
+
     //GET: /Alert/Delete/{id}
     [HttpGet("Delete/{id}")]
     public async Task<IActionResult> Delete(int id) 

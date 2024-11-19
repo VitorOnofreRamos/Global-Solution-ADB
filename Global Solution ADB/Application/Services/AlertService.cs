@@ -1,6 +1,7 @@
 ﻿using Global_Solution_ADB.Models.Entities;
 using Global_Solution_ADB.Repositories.Implementations;
 using Global_Solution_ADB.Repositories.Interfaces;
+using System.Linq.Expressions;
 
 namespace Global_Solution_ADB.Application.Services;
 
@@ -30,38 +31,46 @@ public class AlertService
     public async Task RemoveAlertAsync(int id) =>
         await _alertRepository.RemoveAsync(id);
 
-    public async Task CheckAndGenerateAlertsAsync()
+    //public async Task CheckAndGenerateAlertsAsync()
+    //{
+    //    const decimal thersholdMax = 100;
+
+    //    var sensors = await _sensorRepository.GetAllAsync();
+    //    foreach (var sensor in sensors)
+    //    {
+    //        var latestAnalysis = sensor.Analyses.OrderByDescending(a => a.Timestamp).FirstOrDefault();
+    //        if (latestAnalysis != null && latestAnalysis.Value > thersholdMax)
+    //        {
+    //            await _alertRepository.AddAsync(new LogAlert
+    //            {
+    //                Description = $"Valor {latestAnalysis.Value} acima do limite!",
+    //                TriggeredAt = DateTime.Now,
+    //                IsResolved = false,
+    //                AnalysisId = latestAnalysis.Id
+    //            });
+    //        }
+    //    }
+    //}
+
+    //public async Task<bool> ResolveAlertAsync(int id)
+    //{
+    //    var alert = await _alertRepository.GetByIdAsync(id);
+    //    if (alert == null || alert.IsResolved)
+    //    {
+    //        return false;
+    //    }
+
+    //    alert.IsResolved = true;
+    //    alert.ResolvedAt = DateTime.Now;
+    //    await _alertRepository.UpdateAsync(alert);
+    //    return true;
+    //}
+
+    public async Task<IEnumerable<LogAlert>> GetAlertsByNuclearPlantAsync(int nuclearPlantId)
     {
-        const decimal thersholdMax = 100;
+        var alerts = await _alertRepository.FindAsync(alert =>
+            alert.Analysis.Sensor.NuclearPlantId == nuclearPlantId);
 
-        var sensors = await _sensorRepository.GetAllAsync();
-        foreach (var sensor in sensors)
-        {
-            var latestAnalysis = sensor.Analyses.OrderByDescending(a => a.Timestamp).FirstOrDefault();
-            if (latestAnalysis != null && latestAnalysis.Value > thersholdMax)
-            {
-                await _alertRepository.AddAsync(new LogAlert
-                {
-                    Description = $"Valor {latestAnalysis.Value} acima do limite!",
-                    TriggeredAt = DateTime.Now,
-                    IsResolved = false,
-                    AnalysisId = latestAnalysis.Id
-                });
-            }
-        }
-    }
-
-    public async Task<bool> ResolveAlertAsync(int id)
-    {
-        var alert = await _alertRepository.GetByIdAsync(id);
-        if (alert == null || alert.IsResolved)
-        {
-            return false;
-        }
-
-        alert.IsResolved = true;
-        alert.ResolvedAt = DateTime.Now;
-        await _alertRepository.UpdateAsync(alert);
-        return true;
+        return alerts ?? Enumerable.Empty<LogAlert>();
     }
 }

@@ -71,4 +71,18 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
         return await query.FirstOrDefaultAsync(e => e.Id == id)
             ?? throw new KeyNotFoundException($"Entity with ID {id} not found.");
     }
+
+    public async Task<IEnumerable<T>> FindWithIncludeAsync(
+        Expression<Func<T, bool>> predicate,
+        params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = _entities;
+
+        foreach(var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        return await query.Where(predicate).ToListAsync();
+    }
 }

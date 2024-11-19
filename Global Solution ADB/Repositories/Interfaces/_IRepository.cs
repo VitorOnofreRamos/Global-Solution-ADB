@@ -13,4 +13,5 @@ public interface _IRepository<T> where T : _BaseEntity
     Task RemoveAsync(int id); //DELETE ENTITY
 
     Task<T> GetByIdWithRelationsAsync(int id, params Expression<Func<T, object>>[] includes); //GET BY ID WITH RELATIONS
+    Task<T> FindWithInclueAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
 }
