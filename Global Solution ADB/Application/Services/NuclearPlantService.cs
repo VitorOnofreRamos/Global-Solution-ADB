@@ -27,4 +27,13 @@ public class NuclearPlantService
 
     public async Task RemoveNuclearPlantAsync(int id) =>
         await _nuclearPlantRepository.RemoveAsync(id);
+
+    public async Task<NuclearPlant> GetNuclearPlantWithDetailsAsync(int id)
+    {
+        return await _nuclearPlantRepository.GetByIdWithRelationsAsync(
+            id,
+            np => np.Sensors,
+            np => np.Metrics
+        );
+    }
 }

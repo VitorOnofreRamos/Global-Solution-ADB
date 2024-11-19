@@ -41,7 +41,7 @@ public class NuclearPlantController : Controller
     [HttpGet("Details/{id}")]
     public async Task<IActionResult> Details(int id)
     {
-        var nuclearplant = await _nuclearPlantService.GetNuclearPlantByIdAsync(id);
+        var nuclearplant = await _nuclearPlantService.GetNuclearPlantWithDetailsAsync(id);
         if (nuclearplant == null)
         {
             return NotFound($"Usina com ID {id} não encontrada.");
@@ -53,6 +53,21 @@ public class NuclearPlantController : Controller
             NuclearPlantName = nuclearplant.Name,
             FullCapacity = nuclearplant.FullCapacity,
             NumberOfReactors = nuclearplant.NumberOfReactors,
+            Sensors = nuclearplant.Sensors.Select(s => new SensorViewModel
+            {
+                SensorId = s.Id,
+                SensorName = s.Name,
+                MachinaryLocation = s.MachinaryLocation,
+                Status = s.Status
+            }).ToList(),
+            Metrics = nuclearplant.Metrics.Select(m => new MetricViewModel
+            {
+                MetricId = m.Id,
+                MetricDate = m.MetricDate,
+                ElectricityProvided = m.ElectricityProvided,
+                NuclearParticipation = m.NuclearParticipation,
+                OperationalEfficiency = m.OperationalEfficiency
+            }).ToList()
         };
 
         return View(viewModel);

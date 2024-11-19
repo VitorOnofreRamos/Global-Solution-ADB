@@ -7,27 +7,55 @@
 
 <div class="card mt-3">
     <div class="card-body">
-        <h4>Informações da Usina</h4>
+        <h4>Informações da Usina: @Model.NuclearPlantName</h4>
 
-        <dl class="row">
-            <dt class="col-sm-3">ID</dt>
-            <dd class="col-sm-9">@Model.NuclearPlantId</dd>
+        <p><strong>ID:</strong> @Model.NuclearPlantId</p>
+        <p><strong>Capacidade Total:</strong> @Model.FullCapacity</p>
+        <p><strong>Número de Reatores:</strong> @Model.NumberOfReactors</p>
 
-            <dt class="col-sm-3">Nome da Usina</dt>
-            <dd class="col-sm-9">@Model.NuclearPlantName</dd>
+        <h6>Sensores</>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Localização</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sensor in Model.Sensors)
+                {
+                    <tr>
+                        <td>@sensor.SensorName</td>
+                        <td>@sensor.MachinaryLocation</td>
+                        <td>@(sensor.Status ? "Ativo" : "Inativo")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-            <dt class="col-sm-3">Capacidade Eletrica Total</dt>
-            <dd class="col-sm-9">@Model.FullCapacity.ToString("F2")</dd>
-
-            <dt class="col-sm-3">Numero de Reatores</dt>
-            <dd class="col-sm-9">@Model.NumberOfReactors</dd>
-        </dl>
-
-        <h4>Metrica coletada</h4>
-        <dl class="row">
-            <dt>Título</dt>
-            <dd>Texto</dd>
-        </dl>
+        <h6>Métricas</h6>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Eletricidade Produzida</th>
+                    <th>Participação Nuclear</th>
+                    <th>Eficiência Operacional</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var metric in Model.Metrics)
+                {
+                    <tr>
+                        <td>@metric.MetricDate</td>
+                        <td>@metric.ElectricityProvided</td>
+                        <td>@metric.NuclearParticipation</td>
+                        <td>@metric.OperationalEfficiency</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
         <a href="@Url.Action("Index", "NuclearPlant")" class="btn btn-primary mt-3">Voltar para a Lista</a>
     </div>

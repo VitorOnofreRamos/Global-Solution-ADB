@@ -58,4 +58,17 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<T> GetByIdWithRelationsAsync(int id, params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = _entities;
+
+        foreach (var include in includes)
+        { 
+            query = query.Include(include);
+        }
+
+        return await query.FirstOrDefaultAsync(e => e.Id == id)
+            ?? throw new KeyNotFoundException($"Entity with ID {id} not found.");
+    }
 }
