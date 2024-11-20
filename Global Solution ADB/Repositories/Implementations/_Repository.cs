@@ -2,6 +2,7 @@
 using Global_Solution_ADB.Models.Entities;
 using Global_Solution_ADB.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Client;
 using System.Linq.Expressions;
 
 namespace Global_Solution_ADB.Repositories.Implementations;
@@ -72,17 +73,38 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
             ?? throw new KeyNotFoundException($"Entity with ID {id} not found.");
     }
 
-    public async Task<IEnumerable<T>> FindWithIncludeAsync(
-        Expression<Func<T, bool>> predicate,
-        params Expression<Func<T, object>>[] includes)
+    public async Task<int> InsertWithProcedureAsync(string procedureName, OracleParameter[] parameters)
     {
-        IQueryable<T> query = _entities;
-
-        foreach(var include in includes)
+        using (var connection = _context.Database.GetDbConnection())
         {
-            query = query.Include(include);
-        }
+            await connection.OpenAsync();
 
-        return await query.Where(predicate).ToListAsync();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = procedureName;
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Adicionar os parâmetros
+                command.Parameters.AddRange(parameters);
+
+                // Parâmetro para capturar o ID gerado
+                var outputId = new OracleParameter("p_id", OracleDbType.Int32)
+                {
+                    Direction = System.Data.ParameterDirection.Output
+                };
+                command.Parameters.Add(outputId);
+
+                // Executar a Procedure
+                await command.ExecuteNonQueryAsync();
+
+                //Capturar o valor do ID retornado
+                if (outputId.Value is Oracle.ManagedDataAccess.Types.OracleDecimal oracleDecimal)
+                {
+                    return oracleDecimal.ToInt32(); //Converte para int
+                }
+
+                throw new InvalidCastException("Falha ao converter o valor retornado para int.");
+            }
+        }
     }
 }

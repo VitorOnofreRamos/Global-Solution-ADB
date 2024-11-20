@@ -1,4 +1,6 @@
+using Global_Solution_ADB.Application.Services;
 using Global_Solution_ADB.Models;
+using Global_Solution_ADB.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Oracle.ManagedDataAccess.Client;
 using System.Diagnostics;
@@ -8,13 +10,32 @@ namespace Global_Solution_ADB.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
     private readonly string _connectionString;
+    private readonly NuclearPlantService _nuclearPlantService;
+    private readonly MetricService _metricService;
+    private readonly SensorService _sensorService;
+    private readonly SensorTypeService _sensorTypeService;
+    private readonly AnalysisService _analysisService;
+    private readonly AlertService _alertService;
 
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+    public HomeController(
+        ILogger<HomeController> logger, 
+        IConfiguration configuration,
+        NuclearPlantService nuclearPlantService,
+        MetricService metricService,
+        SensorService sensorService,
+        SensorTypeService sensorTypeService,
+        AnalysisService analysisService,
+        AlertService alertService)
     {
         _logger = logger;
         _connectionString = configuration.GetConnectionString("FiapOracleConnection");
+        _nuclearPlantService = nuclearPlantService;
+        _metricService = metricService;
+        _sensorService = sensorService;
+        _sensorTypeService = sensorTypeService;
+        _analysisService = analysisService;
+        _alertService = alertService;
     }
 
     public IActionResult Index()
@@ -34,61 +55,60 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult InsertTestData()
+    public async Task<IActionResult> InsertTestData()
     {
         try
         {
-            using (var connection = new OracleConnection(_connectionString))
+            //Inserir Usina
+            var nuclearPlantId = await _nuclearPlantService.AddNuclearPlantWithProcedureAsync(new NuclearPlant
             {
-                connection.Open();
+                Name = "Usina Power On",
+                FullCapacity = 300,
+                NumberOfReactors = 2
+            });
 
-                // Chamando cada procedure
-                ExecuteProcedure(connection, "Insert_NuclearPlant", new OracleParameter[]
-                {
-                        new OracleParameter("p_plantName", "Usina Power On"),
-                        new OracleParameter("p_fullCapacity", 300),
-                        new OracleParameter("p_numberOfReactors", 2)
-                });
+            // Inserir Métrica
+            await _metricService.AddMetricWithProcedureAsync(new Metric
+            {
+                MetricDate = DateTime.Now,
+                ElectricityProvided = 700,
+                NuclearParticipation = 50,
+                OperationalEfficiency = 80,
+                NuclearPlantId = nuclearPlantId
+            });
 
-                ExecuteProcedure(connection, "Insert_Metric", new OracleParameter[]
-                {
-                        new OracleParameter("p_MetricDate", DateTime.Now),
-                        new OracleParameter("p_ElectricityProvided", 700),
-                        new OracleParameter("p_NuclearParticipation", 50),
-                        new OracleParameter("p_OperationalEfficiency", 80),
-                        new OracleParameter("p_id_nuclearplant", 1)
-                });
+            // Inserir Sensor
+            var sensorId = await _sensorService.AddSensorWithProcedureAsync(new Sensor
+            {
+                Name = "Sensor de Temperatura do Reator",
+                MachinaryLocation = "No maquinário do reator",
+                Status = true,
+                NuclearPlantId = nuclearPlantId
+            });
 
-                ExecuteProcedure(connection, "Insert_Sensor", new OracleParameter[]
-                {
-                        new OracleParameter("p_SensorName", "Sensor de Temperatura do Reator"),
-                        new OracleParameter("p_MachinaryLocation", "No maquinário do reator"),
-                        new OracleParameter("p_Status", '1'), // '1' para ativo
-                        new OracleParameter("p_id_nuclearplant", 1)
-                });
+            // Inserir Tipo de Sensor
+            await _sensorTypeService.AddSensorTypeWithProcedureAsync(new SensorType
+            {
+                SpecificType = "Radiológico",
+                SensorId = sensorId
+            });
 
-                ExecuteProcedure(connection, "Insert_SensorType", new OracleParameter[]
-                {
-                        new OracleParameter("p_SpecificType", "Radiológico"),
-                        new OracleParameter("p_id_sensor", 1)
-                });
+            // Inserir Análise
+            var analysisId = await _analysisService.AddAnalysisWithProcedureAsync(new Analysis
+            {
+                Value = 300,
+                Timestamp = DateTime.Now,
+                SensorId = sensorId
+            });
 
-                ExecuteProcedure(connection, "Insert_Analysis", new OracleParameter[]
-                {
-                        new OracleParameter("p_AnalysisValue", 300),
-                        new OracleParameter("p_AnalysisTimestamp", DateTime.Now),
-                        new OracleParameter("p_id_sensor", 1)
-                });
-
-                ExecuteProcedure(connection, "Insert_LogAlert", new OracleParameter[]
-                {
-                        new OracleParameter("p_AlertDescription", "Sobreaquecimento no Reator"),
-                        new OracleParameter("p_TriggeredAt", DateTime.Now),
-                        new OracleParameter("p_ResolvedAt", null),
-                        new OracleParameter("p_IsResolved", '0'), // '0' para não resolvido
-                        new OracleParameter("p_id_analysis", 1)
-                });
-            }
+            // Inserir Alerta
+            await _alertService.AddLogAlertWithProcedureAsync(new LogAlert
+            {
+                Description = "Sobreaquecimento no Reator",
+                TriggeredAt = DateTime.Now,
+                IsResolved = false,
+                AnalysisId = analysisId
+            });
 
             TempData["Message"] = "Dados de teste inseridos com sucesso!";
         }
@@ -98,15 +118,5 @@ public class HomeController : Controller
         }
 
         return RedirectToAction("Index");
-    }
-
-    private void ExecuteProcedure(OracleConnection connection, string procedureName, OracleParameter[] parameters)
-    {
-        using (var command = new OracleCommand(procedureName, connection))
-        {
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            command.Parameters.AddRange(parameters);
-            command.ExecuteNonQuery();
-        }
     }
 }

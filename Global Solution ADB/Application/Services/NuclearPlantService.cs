@@ -1,6 +1,6 @@
-﻿using Global_Solution_ADB.Application.ViewModels;
-using Global_Solution_ADB.Models.Entities;
+﻿using Global_Solution_ADB.Models.Entities;
 using Global_Solution_ADB.Repositories.Interfaces;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Global_Solution_ADB.Application.Services;
 
@@ -35,5 +35,17 @@ public class NuclearPlantService
             np => np.Sensors,
             np => np.Metrics
         );
+    }
+
+    public async Task<int> AddNuclearPlantWithProcedureAsync(NuclearPlant nuclearPlant)
+    {
+        var parameters = new OracleParameter[]
+        {
+            new OracleParameter("p_plantName", nuclearPlant.Name),
+            new OracleParameter("p_fullCapacity", nuclearPlant.FullCapacity),
+            new OracleParameter("p_numberOfReactors", nuclearPlant.NumberOfReactors)
+        };
+
+        return await _nuclearPlantRepository.InsertWithProcedureAsync("Insert_NuclearPlant", parameters);
     }
 }

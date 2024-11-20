@@ -1,5 +1,6 @@
 ﻿using Global_Solution_ADB.Models.Entities;
 using Global_Solution_ADB.Repositories.Interfaces;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Global_Solution_ADB.Application.Services;
 
@@ -26,4 +27,15 @@ public class SensorTypeService
 
     public async Task RemoveSensorTypeAsync(int id) =>
         await _sensorTypeRepository.RemoveAsync(id);
+
+    public async Task<int> AddSensorTypeWithProcedureAsync(SensorType sensorType)
+    {
+        var parameters = new OracleParameter[]
+        {
+            new OracleParameter("p_SpecificType", sensorType.SpecificType),
+            new OracleParameter("p_id_sensor", sensorType.SensorId),
+        };
+
+        return await _sensorTypeRepository.InsertWithProcedureAsync("Insert_SensorType", parameters);
+    }
 }

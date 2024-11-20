@@ -1,7 +1,6 @@
 ﻿using Global_Solution_ADB.Models.Entities;
-using Global_Solution_ADB.Repositories.Implementations;
 using Global_Solution_ADB.Repositories.Interfaces;
-using System.Linq.Expressions;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Global_Solution_ADB.Application.Services;
 
@@ -52,19 +51,19 @@ public class AlertService
     //    }
     //}
 
-    //public async Task<bool> ResolveAlertAsync(int id)
-    //{
-    //    var alert = await _alertRepository.GetByIdAsync(id);
-    //    if (alert == null || alert.IsResolved)
-    //    {
-    //        return false;
-    //    }
+    public async Task<bool> ResolveAlertAsync(int id)
+    {
+        var alert = await _alertRepository.GetByIdAsync(id);
+        if (alert == null || alert.IsResolved)
+        {
+            return false;
+        }
 
-    //    alert.IsResolved = true;
-    //    alert.ResolvedAt = DateTime.Now;
-    //    await _alertRepository.UpdateAsync(alert);
-    //    return true;
-    //}
+        alert.IsResolved = true;
+        alert.ResolvedAt = DateTime.Now;
+        await _alertRepository.UpdateAsync(alert);
+        return true;
+    }
 
     public async Task<IEnumerable<LogAlert>> GetAlertsByNuclearPlantAsync(int nuclearPlantId)
     {
@@ -72,5 +71,19 @@ public class AlertService
             alert.Analysis.Sensor.NuclearPlantId == nuclearPlantId);
 
         return alerts ?? Enumerable.Empty<LogAlert>();
+    }
+
+    public async Task AddLogAlertWithProcedureAsync(LogAlert alert)
+    {
+        var parameters = new OracleParameter[]
+        {
+            new OracleParameter("p_AlertDescription", alert.Description),
+            new OracleParameter("p_TriggeredAt", alert.TriggeredAt),
+            new OracleParameter("p_ResolvedAt", alert.ResolvedAt ?? (object)DBNull.Value),
+            new OracleParameter("p_IsResolved", alert.IsResolved ? "1" : "0"), // Converter boolean para CHAR(1)
+            new OracleParameter("p_id_analysis", alert.AnalysisId)
+        };
+
+        await _alertRepository.InsertWithProcedureAsync("Insert_LogAlert", parameters);
     }
 }

@@ -73,41 +73,41 @@ public class NuclearPlantController : Controller
         return View(viewModel);
     }
 
-	//GET: /nuclearplantst/create
-	[HttpGet("Create")]
-    public IActionResult Create()
-    {
-        return View();
-    }
+	////GET: /nuclearplantst/create
+	//[HttpGet("Create")]
+ //   public IActionResult Create()
+ //   {
+ //       return View();
+ //   }
 
-    //POST: nuclearplant/create
-    [HttpPost("Create")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(NuclearPlantDTO dto)
-    {
-        if (ModelState.IsValid)
-        {
-            var nuclearPlant = new NuclearPlant
-            {
-                Name = dto.Name,
-                FullCapacity = dto.FullCapacity,
-                NumberOfReactors= dto.NumberOfReactors
-            };
+ //   //POST: nuclearplant/create
+ //   [HttpPost("Create")]
+ //   [ValidateAntiForgeryToken]
+ //   public async Task<IActionResult> Create(NuclearPlantDTO dto)
+ //   {
+ //       if (ModelState.IsValid)
+ //       {
+ //           var nuclearPlant = new NuclearPlant
+ //           {
+ //               Name = dto.Name,
+ //               FullCapacity = dto.FullCapacity,
+ //               NumberOfReactors= dto.NumberOfReactors
+ //           };
 
-            await _nuclearPlantService.AddNuclearPlantAsync(nuclearPlant);
-            return RedirectToAction("Index");
-        }
+ //           await _nuclearPlantService.AddNuclearPlantAsync(nuclearPlant);
+ //           return RedirectToAction("Index");
+ //       }
 
-        foreach(var modelState in ModelState.Values)
-        {
-            foreach(var error in modelState.Errors)
-            {
-                Console.WriteLine($"Model Error: {error.ErrorMessage}");
-            }
-        }
+ //       foreach(var modelState in ModelState.Values)
+ //       {
+ //           foreach(var error in modelState.Errors)
+ //           {
+ //               Console.WriteLine($"Model Error: {error.ErrorMessage}");
+ //           }
+ //       }
 
-        return View(dto);
-    }
+ //       return View(dto);
+ //   }
 
     //GET: /nuclearplant/delete/{id}
     [HttpGet("Delete/{id}")]

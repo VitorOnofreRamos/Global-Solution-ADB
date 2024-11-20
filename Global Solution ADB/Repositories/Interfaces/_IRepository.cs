@@ -1,4 +1,5 @@
 ﻿using Global_Solution_ADB.Models.Entities;
+using Oracle.ManagedDataAccess.Client;
 using System.Linq.Expressions;
 
 namespace Global_Solution_ADB.Repositories.Interfaces;
@@ -13,5 +14,5 @@ public interface _IRepository<T> where T : _BaseEntity
     Task RemoveAsync(int id); //DELETE ENTITY
 
     Task<T> GetByIdWithRelationsAsync(int id, params Expression<Func<T, object>>[] includes); //GET BY ID WITH RELATIONS
-    Task<T> FindWithInclueAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
+    Task<int> InsertWithProcedureAsync(string procedureName, OracleParameter[] parameters); //CREATE ENTITY BY PROCEDURE
 }
