@@ -75,7 +75,7 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
 
     public async Task<int> InsertWithProcedureAsync(string procedureName, OracleParameter[] parameters)
     {
-        using (var connection = _context.Database.GetDbConnection())
+        using (var connection = new OracleConnection(_context.Database.GetConnectionString()))
         {
             await connection.OpenAsync();
 
