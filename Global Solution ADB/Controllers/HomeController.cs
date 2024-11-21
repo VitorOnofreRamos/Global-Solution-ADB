@@ -66,6 +66,7 @@ public class HomeController : Controller
                 FullCapacity = 300,
                 NumberOfReactors = 2
             });
+            _logger.LogInformation($"Usina inserida");
 
             // Inserir Métrica
             await _metricService.AddMetricWithProcedureAsync(new Metric
@@ -76,6 +77,7 @@ public class HomeController : Controller
                 OperationalEfficiency = 80,
                 NuclearPlantId = nuclearPlantId
             });
+            _logger.LogInformation($"Métrica inserida");
 
             // Inserir Sensor
             var sensorId = await _sensorService.AddSensorWithProcedureAsync(new Sensor
@@ -85,6 +87,7 @@ public class HomeController : Controller
                 Status = true,
                 NuclearPlantId = nuclearPlantId
             });
+            _logger.LogInformation($"Sensor inserido");
 
             // Inserir Tipo de Sensor
             await _sensorTypeService.AddSensorTypeWithProcedureAsync(new SensorType
@@ -92,6 +95,7 @@ public class HomeController : Controller
                 SpecificType = "Radiológico",
                 SensorId = sensorId
             });
+            _logger.LogInformation($"Tipo de Sensor inserido");
 
             // Inserir Análise
             var analysisId = await _analysisService.AddAnalysisWithProcedureAsync(new Analysis
@@ -100,6 +104,7 @@ public class HomeController : Controller
                 Timestamp = DateTime.Now,
                 SensorId = sensorId
             });
+            _logger.LogInformation($"Análise inserida");
 
             // Inserir Alerta
             await _alertService.AddLogAlertWithProcedureAsync(new LogAlert
@@ -109,11 +114,13 @@ public class HomeController : Controller
                 IsResolved = false,
                 AnalysisId = analysisId
             });
+            _logger.LogInformation($"Alerta inserido");
 
             TempData["Message"] = "Dados de teste inseridos com sucesso!";
         }
         catch (Exception ex)
         {
+            _logger.LogInformation($"Erro ao inserir dados de teste: {ex.Message}");
             TempData["Error"] = $"Erro ao inserir dados de teste: {ex.Message}";
         }
 

@@ -121,7 +121,7 @@ public class AlertController : Controller
     public async Task<IActionResult> Resolve(int id)
     {
         var success = await _alertService.ResolveAlertAsync(id);
-        if (success == null)
+        if (!success)
         {
             return NotFound($"Alerta com ID {id} não encontrado ou já resolvido.");
         }
