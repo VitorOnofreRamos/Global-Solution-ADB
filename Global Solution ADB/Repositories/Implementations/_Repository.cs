@@ -107,4 +107,41 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
             }
         }
     }
+
+    public async Task<string> ExecuteToJsonProcedureAsync(string tableName, string idColumn, int idValue)
+    {
+        using (var connection = _context.Database.GetDbConnection())
+        {
+            await connection.OpenAsync();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "TO_JSON";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Adiciona os parâmetros da procedure
+                command.Parameters.Add(new OracleParameter("p_table_name", tableName));
+                command.Parameters.Add(new OracleParameter("p_id_column", idColumn));
+                command.Parameters.Add(new OracleParameter("p_id_value", idValue));
+
+                // Define o parâmetro de saída
+                var outputJson = new OracleParameter("p_json_output", OracleDbType.Clob)
+                {
+                    Direction = System.Data.ParameterDirection.Output
+                };
+                command.Parameters.Add(outputJson);
+
+                // Executa a procedure
+                await command.ExecuteNonQueryAsync();
+
+                // Captura e converte o CLOB para string
+                if (outputJson.Value is Oracle.ManagedDataAccess.Types.OracleClob clob)
+                {
+                    return clob.IsNull ? string.Empty : clob.Value.ToString();
+                }
+
+                throw new InvalidOperationException("Erro ao processar o retorno da procedure TO_JSON.");
+            }
+        }
+    }
 }

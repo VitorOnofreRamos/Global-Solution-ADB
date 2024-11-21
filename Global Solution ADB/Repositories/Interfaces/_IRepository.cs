@@ -15,4 +15,5 @@ public interface _IRepository<T> where T : _BaseEntity
 
     Task<T> GetByIdWithRelationsAsync(int id, params Expression<Func<T, object>>[] includes); //GET BY ID WITH RELATIONS
     Task<int> InsertWithProcedureAsync(string procedureName, OracleParameter[] parameters); //CREATE ENTITY BY PROCEDURE
+    Task<string> ExecuteToJsonProcedureAsync(string tableName, string idColumn, int idValue); //GENERATE JSON BY PROCEDURE
 }

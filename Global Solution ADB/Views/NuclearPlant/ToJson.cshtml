@@ -1,0 +1,15 @@
+﻿@{
+	ViewData["Title"] = "Detalhes da Usina";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4>JSON da Usina</h4>
+        <pre>
+            @ViewData["NuclearPlantJson"]
+        </pre>
+        <a href="@Url.Action("Index", "NuclearPlant")" class="btn btn-primary mt-3">Voltar para a Lista</a>
+    </div>
+</div>

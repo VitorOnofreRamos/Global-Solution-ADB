@@ -48,4 +48,9 @@ public class NuclearPlantService
 
         return await _nuclearPlantRepository.InsertWithProcedureAsync("Insert_NuclearPlant", parameters);
     }
+
+    public async Task<string> GetNuclearPlantJsonAsync(int id) 
+    {
+        return await _nuclearPlantRepository.ExecuteToJsonProcedureAsync("NUCLEARPLANT", "ID_NUCLEARPLANT", id);
+    }
 }
