@@ -131,6 +131,6 @@ public class AlertService
 
     public async Task<string> GetLogAlertJsonAsync(int id)
     {
-        return await _alertRepository.ExecuteToJsonProcedureAsync("LOGALERT", "ID_LOGALERT", id);
+        return await _alertRepository.ExecuteToJsonProcedureAsync("LOGALERT", "ID_ALERT", id);
     }
 }

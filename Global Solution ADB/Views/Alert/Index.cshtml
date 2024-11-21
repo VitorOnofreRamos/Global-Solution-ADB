@@ -37,7 +37,7 @@
                         <td>
                             <div class="d-inline-flex">
                                 <a asp-controller="Alert" asp-action="Details" asp-route-id="@alert.Id" class="btn btn-outline-info btn-sm m-1">Details</a>
-                                <a asp-controller="Alert" asp-action="Json" asp-route-id="@alert.Id" class="btn btn-outline-warning btn-sm m-1">Json</a>
+                                <a asp-controller="Alert" asp-action="ToJson" asp-route-id="@alert.Id" class="btn btn-outline-warning btn-sm m-1">Json</a>
                                 <a asp-controller="Alert" asp-action="Resolve" asp-route-id="@alert.Id" class="btn btn-outline-success btn-sm m-1">Resolve</a>
                                 @if (alert.IsResolved)
                                 {
