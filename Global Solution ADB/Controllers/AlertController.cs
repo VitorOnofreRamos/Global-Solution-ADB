@@ -42,14 +42,13 @@ public class AlertController : Controller
             return NotFound($"Alerta com ID {id} não encontrada.");
         }
 
-        var viewModel = new AlertViewModel
+        var viewModel = new LogAlertViewModel
         {
             AlertId = alert.Id,
             Descrtiption = alert.Description,
             TriggeredAt = alert.TriggeredAt,
             ResolvedAt = alert.ResolvedAt,
-            IsResolved = alert.IsResolved,
-            AnalysisId= alert.Analysis.Id,
+            IsResolved = alert.IsResolved
         };
 
         return View(viewModel);

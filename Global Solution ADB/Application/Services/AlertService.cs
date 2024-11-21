@@ -1,5 +1,6 @@
 ﻿using Global_Solution_ADB.Models.Entities;
 using Global_Solution_ADB.Repositories.Interfaces;
+using Global_Solution_ADB.Application.ViewModels;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Global_Solution_ADB.Application.Services;
@@ -50,6 +51,47 @@ public class AlertService
     //        }
     //    }
     //}
+
+    public async Task<IEnumerable<LogAlertViewModel>> GetAlertWithDetailsAsync()
+    {
+        var alerts = await _alertRepository.GetAllAsync();
+
+        var alertViewModels = alerts.Select(alert => new LogAlertViewModel
+        {
+            AlertId = alert.Id,
+            Descrtiption = alert.Description,
+            TriggeredAt = alert.TriggeredAt,
+            ResolvedAt = alert.ResolvedAt,
+            IsResolved = alert.IsResolved,
+
+            // Populando Analysis
+            Analysis = new AnalysisViewModel
+            {
+                AnalysisId = alert.AnalysisId,
+                AnalysisValue = alert.Analysis.Value,
+                AnalysisTimestamp = alert.Analysis.Timestamp
+            },
+
+            // Populando Sensor (via Analysis)
+            Sensor = new SensorViewModel
+            {
+                SensorId = alert.Analysis.Sensor.Id,
+                SensorName = alert.Analysis.Sensor.Name,
+                MachinaryLocation = alert.Analysis.Sensor.MachinaryLocation,
+                Status = alert.Analysis.Sensor.Status,
+            },
+
+            NuclearPlant = new NuclearPlantViewModel
+            {
+                NuclearPlantId = alert.Analysis.Sensor.NuclearPlant.Id,
+                NuclearPlantName = alert.Analysis.Sensor.NuclearPlant.Name,
+                FullCapacity = alert.Analysis.Sensor.NuclearPlant.FullCapacity,
+                NumberOfReactors = alert.Analysis.Sensor.NuclearPlant.Id
+            }
+        });
+
+        return alertViewModels;
+    }
 
     public async Task<bool> ResolveAlertAsync(int id)
     {
