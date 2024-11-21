@@ -1,0 +1,15 @@
+﻿@{
+	ViewData["Title"] = "Detalhes do Alerta";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4>JSON da Alerta</h4>
+        <pre class="bg-dark bg-opacity-25">
+            @ViewData["LogAlertJson"]
+        </pre>
+        <a href="@Url.Action("Index", "Alert")" class="btn btn-primary mt-3">Voltar para a Lista</a>
+    </div>
+</div>

@@ -128,4 +128,9 @@ public class AlertService
 
         await _alertRepository.InsertWithProcedureAsync("Insert_LogAlert", parameters);
     }
+
+    public async Task<string> GetLogAlertJsonAsync(int id)
+    {
+        return await _alertRepository.ExecuteToJsonProcedureAsync("LOGALERT", "ID_LOGALERT", id);
+    }
 }

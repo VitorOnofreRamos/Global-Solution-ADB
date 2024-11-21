@@ -27,7 +27,7 @@
                         <td>
                             @if (!alert.IsResolved)
                             {
-                                <span class="badge bg-danger">Ativo</span>
+                                <span class="badge bg-danger">Alerta</span>
                             }
                             else
                             {
@@ -36,12 +36,13 @@
                         </td>
                         <td>
                             <div class="d-inline-flex">
-                                <form asp-controller="Alert" asp-action="Resolve" asp-route-id="@alert.Id" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-success">Resolver</button>
-                                </form>
-
-                                <a asp-controller="Alert" asp-action="Details" asp-route-id="@alert.Id" class="btn btn-info btn-sm m-1">Details</a>
-                                <a asp-controller="Alert" asp-action="Delete" asp-route-id="@alert.Id" class="btn btn-danger btn-sm m-1">Remove</a>
+                                <a asp-controller="Alert" asp-action="Details" asp-route-id="@alert.Id" class="btn btn-outline-info btn-sm m-1">Details</a>
+                                <a asp-controller="Alert" asp-action="Json" asp-route-id="@alert.Id" class="btn btn-outline-warning btn-sm m-1">Json</a>
+                                <a asp-controller="Alert" asp-action="Resolve" asp-route-id="@alert.Id" class="btn btn-outline-success btn-sm m-1">Resolve</a>
+                                @if (alert.IsResolved)
+                                {
+                                    <a asp-controller="Alert" asp-action="Delete" asp-route-id="@alert.Id" class="btn btn-outline-danger btn-sm m-1">Remove</a>
+                                }                                
                             </div>
                         </td>
                     </tr>
