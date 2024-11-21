@@ -94,25 +94,18 @@ public class AlertController : Controller
         return View();
     }
 
-    //GET: /Alert/Delete/{id}
-    [HttpGet("Delete/{id}")]
-    public async Task<IActionResult> Delete(int id) 
-    {
-        var alert = await _alertService.GetAlertByIdAsync(id);
-        if (alert == null) 
-        {
-            return NotFound($"Alerta com ID {id} não encontrado.");
-        }
-
-        return RedirectToAction("Index");
-    }
-
     //DELETE: /Alert/Delete/{id}
     [HttpDelete("Delete/{id}")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
+        var alert = await _alertService.GetAlertByIdAsync(id);
+        if(alert == null)
+        {
+            return NotFound($"Alerta com ID {id} não encontrado.");
+        }
+
         await _alertService.RemoveAlertAsync(id);
-        return RedirectToAction("Index");
+        return Ok(new {message = "Alerta excluído com sucesso!"});
     }
 
     //PUT: /Alert/Resolve/{id}

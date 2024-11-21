@@ -20,7 +20,7 @@
             <tbody>
                 @foreach (var alert in Model)
                 {
-                    <tr>
+                    <tr id="alert-row-@alert.Id">
                         <td>@alert.Id</td>
                         <td>@alert.AnalysisId</td>
                         <td>@alert.TriggeredAt</td>
@@ -40,7 +40,7 @@
                                 <a asp-controller="Alert" asp-action="ToJson" asp-route-id="@alert.Id" class="btn btn-outline-warning btn-sm m-1">Json</a>
                                 @if (!alert.IsResolved)
                                 {
-                                    <form asp-controller="Alert" asp-action="Resolve" asp-route-id="@alert.Id" method="post" class="d-inline">
+                                    <form asp-controller="Alert" asp-action="Resolve" asp-route-id="@alert.Id" method="post" class="d-inline m-1">
                                         <input type="hidden" name="_method" value="PUT" />
                                         @Html.AntiForgeryToken()
                                         <button type="submit" class="btn btn-success btn-sm">Resolver</button>
@@ -48,7 +48,7 @@
                                 }
                                 else
                                 {
-                                    <a asp-controller="Alert" asp-action="Delete" asp-route-id="@alert.Id" class="btn btn-outline-danger btn-sm m-1">Remove</a>
+                                    <button class="btn btn-outline-danger btn-sm m-1" onclick="confirmDelete(@alert.Id)">Remover</button>
                                 }                                
                             </div>
                         </td>
@@ -58,3 +58,56 @@
         </table>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmação de Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja excluir este alerta?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let alertIdToDelete;
+
+        function confirmDelete(alertId) {
+            alertIdToDelete = alertId;
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+            deleteModal.show();
+        }
+
+        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+            fetch(`/Alert/Delete/${alertIdToDelete}`, {
+                method: 'DELETE',
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById(`alert-row-${alertIdToDelete}`).remove();
+                        alert('Alerta excluído com sucesso!');
+                    } else {
+                        alert('Erro ao excluir o alerta.');
+                    }
+                })
+                .catch(error => alert('Erro ao realizar a exclusão: ' + error));
+
+            // Fechar o modal
+            const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmationModal'));
+            deleteModal.hide();
+        });
+    </script>
+}

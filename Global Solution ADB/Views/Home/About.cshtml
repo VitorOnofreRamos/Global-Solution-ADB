@@ -1,6 +1,66 @@
 ﻿@{
     ViewData["Title"] = "Sobre o Projeto";
 }
-<h2 class="mh-2">@ViewData["Title"]</h2>
+<h2 class="mt-3">@ViewData["Title"]</h2>
 
-<p>Text</p>
+<h4>Visão Geral</h4>
+
+<p>
+    O Sistema de Monitoramento de Usinas Nucleares é uma plataforma desenvolvida em ASP.NET Core com o objetivo de monitorar e gerenciar as operações de usinas nucleares de forma segura e eficiente.
+    A aplicação centraliza informações essenciais, como métricas de desempenho, sensores, análises e alertas, promovendo maior controle e transparência na gestão das operações.
+</p>
+
+<h4>Objetivo</h4>
+<p>
+    Este projeto foi desenvolvido como parte de um desafio acadêmico proposto pela Faculdade FIAP para o curso de Análise e Desenvolvimento de Sistemas.
+    O principal objetivo é criar um sistema capaz de monitorar usinas nucleares em tempo real, destacando possíveis riscos e garantindo a eficiência operacional.
+    Ele busca proporcionar uma solução escalável, robusta e segura para atender as demandas específicas do setor de energia nuclear.
+</p>
+
+<h4>Funcionalidades</h4>
+<p>As principais funcionalidades do sistema incluem:</p>
+
+<ul>
+    <li><b>Cadastro e Monitoramento de Usinas:</b> Permite registrar informações detalhadas sobre cada usina, como capacidade total, número de reatores e sensores associados.</li>
+    <li><b>Gestão de Sensores:</b> Adição e controle de sensores operacionais, com informações de localização e status de funcionamento.</li>
+    <li><b>Análises Operacionais:</b> Coleta e registro de métricas para acompanhar a eficiência e o desempenho das usinas.</li>
+    <li><b>Gerenciamento de Alertas:</b> Detecção automática de condições anormais e geração de alertas, com opções para resolução e acompanhamento.</li>
+    <li><b>Relatórios Detalhados:</b> Exportação de dados em formatos estruturados, como JSON, para análise e auditoria.</li>
+</ul>
+
+<h4>Tecnologias Utilizadas</h4>
+<p>O sistema foi construído utilizando as seguintes tecnologias:</p>
+
+<ul>
+    <li><b>ASP.NET Core:</b> Backend responsável pela lógica de negócio e comunicação com o banco de dados.</li>
+    <li><b>Oracle Database:</b> Banco de dados relacional usado para armazenar informações de usinas, sensores, análises e alertas.</li>
+    <li><b>Bootstrap e JavaScript:</b> Interface do usuário responsiva e intuitiva, garantindo acessibilidade em diferentes dispositivos.</li>
+    <li><b>Procedures PL/SQL:</b> Operações otimizadas e validadas diretamente no banco de dados.</li>
+</ul>
+
+<h4>Estrutura do Projeto</h4>
+<p>O projeto é dividido em camadas para facilitar a manutenção e a escalabilidade:</p>
+
+<ul>
+    <li><b>Camada de Apresentação:</b> Views e layouts construídos com Razor Pages e Bootstrap.</li>
+    <li><b>Camada de Serviços:</b> Regras de negócio e lógica de comunicação entre controllers e repositórios.</li>
+    <li><b>Camada de Persistência:</b> Repositórios para acesso ao banco de dados utilizando procedimentos armazenados (procedures).</li>
+    <li><b>Camada de Modelos:</b> Definição das entidades do banco de dados e DTOs para transferência de dados.</li>
+</ul>
+
+<h4>Benefícios</h4>
+<p>O sistema traz diversas vantagens para a gestão de usinas nucleares:</p>
+
+<ul>
+    <li>Melhor controle sobre métricas e sensores operacionais.</li>
+    <li>Identificação e resolução rápida de problemas críticos por meio de alertas automatizados.</li>
+    <li>Centralização de dados essenciais para facilitar a análise e a auditoria.</li>
+    <li>Interface amigável, que reduz o tempo de treinamento dos operadores.</li>
+    <li>Escalabilidade para adicionar novas usinas e sensores à medida que o sistema cresce.</li>
+</ul>
+
+<h4>Conclusão</h4>
+<p>
+    Este projeto busca proporcionar uma solução robusta e eficiente para o monitoramento de usinas nucleares, com foco na segurança e na produtividade.
+    A integração de tecnologias modernas e práticas de desenvolvimento garante que o sistema seja uma ferramenta confiável para operadores e administradores no setor de energia nuclear.
+</p>
