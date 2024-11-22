@@ -1,4 +1,4 @@
-# Sistema de Monitoramento de Usinas Nucleares
+# Sistema de Anáise e Monitoramento de Usinas Nucleares (S.A.M.E.N)
 
 ## Visão Geral do Projeto
 Este projeto é um sistema desenvolvido em ASP.NET Core para o monitoramento de usinas nucleares. 
