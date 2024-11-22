@@ -18,18 +18,25 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted custom-footer bg-black">
+    <footer class="border-top footer text-muted custom-footer bg-black py-4">
         <div class="container">
-            <span>&copy; 2024 - Global_Solution_ADB - <a asp-area="" asp-controller="Home" asp-action="About">About</a></span>
-
             <div class="row">
-                <p><b>Integrantes</b></p>
-                <ul>   
-                    <li>Vitor Onofre Ramos - RM553241</li>
-                    <li>Pedro Henrique Soares Araujo - RM553801</li>
-                    <li>Beatriz Silva - RM552600</li>
-                </ul>
-
+                <!-- Seção sobre o copyright -->
+                <div class="col-md-6">
+                    <span>
+                        &copy; 2024 - Global_Solution_ADB -
+                        <a asp-area="" asp-controller="Home" asp-action="About" class="text-decoration-none">Sobre</a>
+                    </span>
+                </div>
+                <!-- Seção dos integrantes -->
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <p><b>Integrantes:</b></p>
+                    <ul class="list-unstyled">
+                        <li>Vitor Onofre Ramos - RM553241</li>
+                        <li>Pedro Henrique Soares Araujo - RM553801</li>
+                        <li>Beatriz Silva - RM552600</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </footer>
