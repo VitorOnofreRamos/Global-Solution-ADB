@@ -8,28 +8,26 @@ usinas nucleares e garantir a segurança e eficiência operacionais.
 
 ### Pricipais Funcionalidades
 - **Gerenciamento de Usinas:** Gerencie informações detalhadas sobre usinas, incluindo capacidade total e número de reatores.
-- **Monitoramento de Sensores:** Registre sensores associados a cada usina e acompanhe seu status e localização.
-- **Análises Operacionais:** Coleta e armazenamento de métricas e análises relacionadas ao desempenho dos sensores.
+  - **Informações de Sensores e Metricas:** Junto com as usinas obtenha informações de sensores (associados a cada usina e acompanhe seu status e localização) e metricas obtendo informações gerais em relação as geração de energia da usina.
 - **Alertas de Segurança:** Geração de alertas baseados em critérios predefinidos, com funcionalidades para resolução e acompanhamento.
 - **Integração com Banco de Dados Oracle:** Uso de procedures para operações otimizadas e validações de dados.
 
 ## Funcionalidades
 ### CRUD Completo
-- Inserção feita pelo Banco de Dados
-- Usinas Nucleares:
-  - Visualização de usinas.
-- Sensores e Tipos de Sensores:
-  - Gerenciamento detalhado de sensores e seus tipos.
-- Métricas e Análises:
-  - Registro e acompanhamento de métricas operacionais e análises associadas.
-- Alertas:
-  - Geração e resolução de alertas de segurança.
+- **CREATE:** Inserção de todas as tabelas feita pelo Banco de Dados
+- **Usinas Nucleares:**
+  - **READ:** Visualização de usinas.
+  - **READ:** Visualização detalha de dados da usina.
+- **Alertas:**
+  - **CREATE:** Geração de alertas por meio dos dados obtidos pelas análises.
+  - **UPDATE:** Resolução dos alertas.
+  - **DELETE:** Exclusão do alerta após a resolução.
 
 ### Monitoramento Prático
 - Exibição consolidada de métricas de usinas e sensores em uma interface amigável.
 - Destaque para alertas críticos e informações relevantes.
 
-### Validções Robustas
+### Validações Robustas
 - Todas as inserções e atualizações passam por validações de dados diretamente no banco de dados usando funções PL/SQL.
 
 ## Estrutura do Projeto
@@ -47,16 +45,20 @@ O projeto segue uma arquitetura em camadas para facilitar a manutenção e escal
 ## Pré-requisitos
 - .NET SDK (versão 6 ou superior)
 - Visual Studio ou Visual Studio Code
-- Banco de Dados Oracle com as procedures configuradas
+- Banco de Dados Oracle com as procedures configuradas:
+  - Link do Repositório com as procedure: ([https://github.com/VitorOnofreRamos/BancoDeDadosGlobal](https://github.com/VitorOnofreRamos/BancoDeDadosGlobal))
 - Ferramentas Oracle:
   - Oracle SQL Developer para gerenciamento do banco de dados
-  - Oracle Managed Data Access para integração com o projeto .NET
 
 ## Instruções de Instalação
-### 1. Clonar o Repositório
+### 1. Clonar o Repositórios
+- Para `Global-Solution-ADB`
 ```bash
 git clone https://github.com/VitorOnofreRamos/Global-Solution-ADB.git
 cd Global-Solution-ADB
+```
+- Para `BancoDeDadosGlobal`
+```bash
 ```
 ### 2. Configuração do Banco de Dados
 - Certifique-se de que o banco de dados Oracle está configurado e com as procedures PL/SQL incluídas.
