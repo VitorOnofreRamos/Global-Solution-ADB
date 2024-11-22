@@ -106,7 +106,7 @@ public class HomeController : Controller
             });
             _logger.LogInformation($"Análise inserida");
 
-            await _sensorService.CheckAndGenerateAlertsAsync();
+            await _analysisService.GenerateAlertByAnalysis(analysisId);
 
             TempData["Message"] = "Dados de teste inseridos com sucesso!";
         }

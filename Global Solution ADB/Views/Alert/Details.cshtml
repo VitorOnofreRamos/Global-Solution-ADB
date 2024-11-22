@@ -18,8 +18,11 @@
 		<h4>Informações do LogAlert: @Model.AlertId</h4>
 
 		<p><strong>ID:</strong> @Model.AlertId</p>
-		<p><strong>Descrição do LogAlert</strong> @Model.Descrtiption</p>
-		<p><strong>Data da chamada</strong> @Model.TriggeredAt.ToString()</p>
+		<p><strong>Descrição do LogAlert:</strong> @Model.Description</p>
+		<p><strong>Data da chamada:</strong> @Model.TriggeredAt.ToString()</p>
+		@if(Model.IsResolved){
+			<p><strong>Data da resolução:</strong> @Model.ResolvedAt.ToString()</p>
+		}
 
 		<div></div>
 		<a href="@Url.Action("Index", "Alert")" class="btn btn-primary mt-3">Voltar para a Lista</a>

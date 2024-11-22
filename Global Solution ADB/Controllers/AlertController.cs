@@ -69,7 +69,7 @@ public class AlertController : Controller
         var viewModel = new LogAlertViewModel
         {
             AlertId = alert.Id,
-            Descrtiption = alert.Description,
+            Description = alert.Description,
             TriggeredAt = alert.TriggeredAt,
             ResolvedAt = alert.ResolvedAt,
             IsResolved = alert.IsResolved
