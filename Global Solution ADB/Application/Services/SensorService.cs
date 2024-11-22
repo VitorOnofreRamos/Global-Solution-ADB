@@ -1,4 +1,5 @@
 ﻿using Global_Solution_ADB.Models.Entities;
+using Global_Solution_ADB.Repositories.Implementations;
 using Global_Solution_ADB.Repositories.Interfaces;
 using Oracle.ManagedDataAccess.Client;
 
@@ -7,10 +8,13 @@ namespace Global_Solution_ADB.Application.Services;
 public class SensorService
 {
     private readonly ISensorRepository _sensorRepository;
+    private readonly ILogger _logger; 
+    private readonly AlertService _alertService;
 
-    public SensorService(ISensorRepository sensorRepository)
+    public SensorService(ISensorRepository sensorRepository, AlertService alertService)
     {
         _sensorRepository = sensorRepository;
+        _alertService = alertService;
     }
 
     public async Task<Sensor> GetSensorByIdAsync(int id) =>

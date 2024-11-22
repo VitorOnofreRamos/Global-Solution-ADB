@@ -13,19 +13,19 @@ public class AnalysisService
         _analysisRepository = analysisRepository;
     }
 
-    public async Task<Analysis> GetSensorByIdAsync(int id) =>
+    public async Task<Analysis> GetAnalysisByIdAsync(int id) =>
         await _analysisRepository.GetByIdAsync(id);
 
-    public async Task<IEnumerable<Analysis>> GetAllSensorAsync() =>
+    public async Task<IEnumerable<Analysis>> GetAllAnalysisAsync() =>
         await _analysisRepository.GetAllAsync();
 
-    public async Task AddSensorAsync(Analysis analysis) =>
+    public async Task AddAnalysisAsync(Analysis analysis) =>
         await _analysisRepository.AddAsync(analysis);
 
-    public async Task UpdateSensorAsync(Analysis analysis) =>
+    public async Task UpdateAnalysisAsync(Analysis analysis) =>
         await _analysisRepository.UpdateAsync(analysis);
 
-    public async Task RemoveSensorAsync(int id) =>
+    public async Task RemoveAnalysisAsync(int id) =>
         await _analysisRepository.RemoveAsync(id);
 
     public async Task<int> AddAnalysisWithProcedureAsync(Analysis analysis)

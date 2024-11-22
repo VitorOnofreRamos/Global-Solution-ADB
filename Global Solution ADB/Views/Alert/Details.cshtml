@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Global_Solution_ADB.Application.ViewModels.LogAlertViewModel>
+﻿@model Global_Solution_ADB.Application.ViewModels.LogAlertViewModel
 @{
 	ViewData["Title"] = "Lista de Alerta";
 }
@@ -6,8 +6,23 @@
 <h2 class="mt-3">@ViewData["Title"]</h2>
 
 <div class="card mt-3">
+	@if (!Model.IsResolved)
+	{
+		<h2 class="text-center text-white bg-danger rounded p-1">Alerta</h2>
+	}
+	else
+	{
+		<h2 class="text-center text-white bg-success rounded p-1">Resolvido</h2>
+	}
 	<div class="card-body">
-		<table class="table"></table>
+		<h4>Informações do LogAlert: @Model.AlertId</h4>
+
+		<p><strong>ID:</strong> @Model.AlertId</p>
+		<p><strong>Descrição do LogAlert</strong> @Model.Descrtiption</p>
+		<p><strong>Data da chamada</strong> @Model.TriggeredAt.ToString()</p>
+
+		<div></div>
+		<a href="@Url.Action("Index", "Alert")" class="btn btn-primary mt-3">Voltar para a Lista</a>
 	</div>
 </div>
 

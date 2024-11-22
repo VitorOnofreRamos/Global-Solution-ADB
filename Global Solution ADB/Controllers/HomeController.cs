@@ -106,15 +106,7 @@ public class HomeController : Controller
             });
             _logger.LogInformation($"Análise inserida");
 
-            // Inserir Alerta
-            await _alertService.AddLogAlertWithProcedureAsync(new LogAlert
-            {
-                Description = "Sobreaquecimento no Reator",
-                TriggeredAt = DateTime.Now,
-                IsResolved = false,
-                AnalysisId = analysisId
-            });
-            _logger.LogInformation($"Alerta inserido");
+            await _sensorService.CheckAndGenerateAlertsAsync();
 
             TempData["Message"] = "Dados de teste inseridos com sucesso!";
         }
