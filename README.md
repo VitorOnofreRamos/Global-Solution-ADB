@@ -95,7 +95,7 @@ cd BancoDeDadosGlobal
 ### 4. Configuração das Procedures:
 - Após criar as tabelas em seu banco de dados, você deve acessar as procedures e execulás
   - Para isso abra a pasta de `BancoDeDadosGlobal` e siga o seguite caminho: `BancoDeDadosGlobal/Banco de Dados Oracle/Desenvolvimento/`.
-  - Após isso abra os arquivos SQL `FunçoesDeValidacao.sql`, `ProceduresDeInsert.sql` e `ProceduresToJson.sql`
+  - Em seguida utilizando **Oracle SQL Developer** abra os arquivos SQL `FunçoesDeValidacao.sql`, `ProceduresDeInsert.sql` e `ProceduresToJson.sql` e os execute.
 
 ### 5. Configuração do Projeto:
 - Abra o projeto em seu editor de preferência (recomendado: Visual Studio ou Visual Studio Code).
