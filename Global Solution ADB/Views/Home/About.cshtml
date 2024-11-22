@@ -6,8 +6,8 @@
 <h4>Visão Geral</h4>
 
 <p>
-    O Sistema de Monitoramento de Usinas Nucleares é uma plataforma desenvolvida em ASP.NET Core com o objetivo de monitorar e gerenciar as operações de usinas nucleares de forma segura e eficiente.
-    A aplicação centraliza informações essenciais, como métricas de desempenho, sensores, análises e alertas, promovendo maior controle e transparência na gestão das operações.
+    O Sistema de Monitoramento de Usinas Nucleares (S.A.M.E.N) é uma plataforma desenvolvida em ASP.NET Core com o objetivo de monitorar e gerenciar as operações de usinas nucleares de forma segura e eficiente.
+    A aplicação centraliza informações essenciais, como métricas de desempenho, sensores, análises e alertas, om o objetivo de garantir a segurança operacional e a eficiência das usinas.
 </p>
 
 <h4>Objetivo</h4>
@@ -21,11 +21,10 @@
 <p>As principais funcionalidades do sistema incluem:</p>
 
 <ul>
-    <li><b>Cadastro e Monitoramento de Usinas:</b> Permite registrar informações detalhadas sobre cada usina, como capacidade total, número de reatores e sensores associados.</li>
-    <li><b>Gestão de Sensores:</b> Adição e controle de sensores operacionais, com informações de localização e status de funcionamento.</li>
-    <li><b>Análises Operacionais:</b> Coleta e registro de métricas para acompanhar a eficiência e o desempenho das usinas.</li>
-    <li><b>Gerenciamento de Alertas:</b> Detecção automática de condições anormais e geração de alertas, com opções para resolução e acompanhamento.</li>
-    <li><b>Relatórios Detalhados:</b> Exportação de dados em formatos estruturados, como JSON, para análise e auditoria.</li>
+    <li><b>Gerenciamento de Usinas:</b> Permite registrar e visualizar informações detalhadas sobre cada usina, como capacidade total, número de reatores e sensores associados.</li>
+    <li><b>Informações de Sensores e Métricas:</b> Acompanhamento dos sensores operacionais e métricas relacionadas à geração de energia de cada usina.</li>
+    <li><b>Alertas de Segurança:</b> Geração e gestão de alertas automáticos baseados em condições anormais detectadas, com funcionalidades para resolução e acompanhamento.</li>
+    <li><b>Integração com Banco de Dados Oracle:</b> Uso de procedures otimizadas para manipulação de dados e validações diretamente no banco de dados.</li>
 </ul>
 
 <h4>Tecnologias Utilizadas</h4>
@@ -39,13 +38,13 @@
 </ul>
 
 <h4>Estrutura do Projeto</h4>
-<p>O projeto é dividido em camadas para facilitar a manutenção e a escalabilidade:</p>
+<p>O projeto segue uma arquitetura em camadas, o que facilita a manutenção e escalabilidade:</p>
 
 <ul>
-    <li><b>Camada de Apresentação:</b> Views e layouts construídos com Razor Pages e Bootstrap.</li>
-    <li><b>Camada de Serviços:</b> Regras de negócio e lógica de comunicação entre controllers e repositórios.</li>
-    <li><b>Camada de Persistência:</b> Repositórios para acesso ao banco de dados utilizando procedimentos armazenados (procedures).</li>
-    <li><b>Camada de Modelos:</b> Definição das entidades do banco de dados e DTOs para transferência de dados.</li>
+    <li><b>Camada de Apresentação:</b> Responsável pela renderização das páginas e interação com o usuário, utilizando Controllers e Views com Razor Pages e Bootstrap.</li>
+    <li><b>Camada de Aplicação:</b> Contém a lógica de negócios e a comunicação entre controllers e repositórios (Services).</li>
+    <li><b>Camada de Persistência:</b> Acesso ao banco de dados e execução de queries e procedures otimizadas (Repositories).</li>
+    <li><b>Camada de Modelos:</b> Representação das entidades e DTOs para transferência de dados entre as camadas (Models).</li>
 </ul>
 
 <h4>Benefícios</h4>
