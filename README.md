@@ -59,9 +59,10 @@ cd Global-Solution-ADB
 ```
 - Para `BancoDeDadosGlobal`
 ```bash
+https://github.com/VitorOnofreRamos/BancoDeDadosGlobal.git
+cd BancoDeDadosGlobal
 ```
 ### 2. Configuração do Banco de Dados
-- Certifique-se de que o banco de dados Oracle está configurado e com as procedures PL/SQL incluídas.
 - Atualize a string de conexão no arquivo `appsettings.json` com as credenciais corretas:
 ```json
 "ConnectionStrings": {
@@ -91,14 +92,19 @@ cd Global-Solution-ADB
   Update-Database
   ```
 
-### 4. Configuração do Projeto:
+### 4. Configuração das Procedures:
+- Após criar as tabelas em seu banco de dados, você deve acessar as procedures e execulás
+  - Para isso abra a pasta de `BancoDeDadosGlobal` e siga o seguite caminho: `BancoDeDadosGlobal/Banco de Dados Oracle/Desenvolvimento/`.
+  - Após isso abra os arquivos SQL `FunçoesDeValidacao.sql`, `ProceduresDeInsert.sql` e `ProceduresToJson.sql`
+
+### 5. Configuração do Projeto:
 - Abra o projeto em seu editor de preferência (recomendado: Visual Studio ou Visual Studio Code).
 - Restaure as dependências:
 ```bash
 dotnet restore
 ```
 
-### 5. Iniciar a Aplicação:
+### 6. Iniciar a Aplicação:
 ```bash
 dotnet run
 ```
@@ -116,7 +122,7 @@ dotnet run
 - `/Alerta/Details;{id}`: Visualização de informações detalhadas de uma alerta.
 - `/Alerta/ToJson/{id}`: Visualização de informações de uma usina em JSON.
 - `/Alert/Resolve/{id}`: Resolução de um alerta específico.
-- `/Alert/Delete/{id}`: Exclusão de um alerta *(só pode ser feito caso o alerta já esteje resolvido)*.
+- `/Alert/Delete/{id}`: Exclusão de um alerta *(só pode ser feito caso o alerta já tenha sido resolvido)*.
 
 ## Layout e Customização
 - **Interface Responsiva**: Desenvolvida com **Bootstrap**, garantindo visualização otimizada em diferentes dispositivos.
