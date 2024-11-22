@@ -28,7 +28,9 @@ public class AnalysisService
     public async Task RemoveAnalysisAsync(int id) =>
         await _analysisRepository.RemoveAsync(id);
 
-    public async Task<int> AddAnalysisWithProcedureAsync(Analysis analysis)
+
+
+	public async Task<int> AddAnalysisWithProcedureAsync(Analysis analysis)
     {
         var parameters = new OracleParameter[]
          {
